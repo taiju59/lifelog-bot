@@ -8,6 +8,47 @@ const TYPE_LUNCH = 'lunch'
 const TYPE_DINNER = 'dinner'
 
 class Report {
+  ask(type) {
+    let typeText
+    switch (type) {
+      case TYPE_BREAKFAST:
+        typeText = '朝食'
+        break
+      case TYPE_LUNCH:
+        typeText = '昼食'
+        break
+      case TYPE_DINNER:
+        typeText = '夕食'
+        break
+      default:
+        console.log('Invalid type')
+        return
+    }
+    const userIds = userService.getAllIds()
+    const askDate = new Date().getTime()
+    reportService.ask(userIds, type, askDate)
+    line.multiCast(userIds, [{
+      'type': 'template',
+      'altText': typeText + '確認',
+      'template': {
+        'type': 'buttons',
+        'text': typeText + 'は食べましたか？',
+        'actions': [{
+          'type': 'postback',
+          'label': 'はい',
+          'data': 'ask=' + askDate
+        }]
+      }
+    }])
+  }
+
+  answer(userId, data) {
+    //TODO: データの形式を検討した上での処理
+    const askDate = data.split('=')[1]
+    const answerDate = new Date().getTime()
+    reportService.answer(userId, askDate, answerDate)
+  }
+
   send() {
     const userIds = userService.getAllIds()
     const reports = reportService.getAll()
@@ -15,7 +56,7 @@ class Report {
       const userReports = reports.filter((value, index) => {
         return (value.userId == userId)
       })
-      if (!userReports) {
+      if (!userReports || userReports.length == 0) {
         // レポートする内容が存在しない場合
         console.log('No reports(userId: ' + userId + ')')
         return
@@ -27,13 +68,13 @@ class Report {
         reportMessage += '\n' + askDate + ' '
         switch (report.type) {
           case TYPE_BREAKFAST:
-            reportMessage += '朝ごはん'
+            reportMessage += '朝食'
             break
           case TYPE_LUNCH:
-            reportMessage += '昼ごはん'
+            reportMessage += '昼食'
             break
           case TYPE_DINNER:
-            reportMessage += '夕ごはん'
+            reportMessage += '夕食'
             break
         }
         reportMessage += '\n回答: '
@@ -48,10 +89,9 @@ class Report {
       // レポート送信
       line.push(userId, [{
         type: 'text',
-        message: reportMessage
+        text: reportMessage
       }])
     }
   }
 }
 module.exports = new Report()
-

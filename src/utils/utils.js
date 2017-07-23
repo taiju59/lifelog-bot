@@ -1,5 +1,5 @@
 const fs = require('fs')
-const moment = require('moment')
+const moment = require('moment-timezone')
 
 module.exports = {
   readFileSync(filePath) {
@@ -17,7 +17,7 @@ module.exports = {
   },
   timeToString(time, format) {
     // timeはDate型でもunixタイムスタンプでも可
-    const date = moment.unix(time)
-    return date.format(format)
+    moment.tz.setDefault('Asia/Tokyo')
+    return moment(time).format(format)
   }
 }

@@ -1,12 +1,49 @@
 const CronJob = require('cron').CronJob
 const reportController = require('./controllers/report')
 
-const workerJob = new CronJob({
-  cronTime: '*/30 * * * * *', //毎10秒実行
+console.log('start cron')
+
+const breakfastJob = new CronJob({
+  cronTime: '* * 9 * * *',
   onTick: () => {
-    reportController.send()
+    console.log('Ask breakfast')
+    const type = reportController.TYPE_BREAKFAST
+    reportController.ask(type)
   },
-  start: true, //newした後即時実行するかどうか
+  start: false,
   timeZone: 'Asia/Tokyo'
 })
-workerJob.start()
+breakfastJob.start()
+
+const lunchJob = new CronJob({
+  cronTime: '0 0 12 * * *',
+  onTick: () => {
+    const type = reportController.TYPE_LUNCH
+    reportController.ask(type)
+  },
+  start: false,
+  timeZone: 'Asia/Tokyo'
+})
+lunchJob.start()
+
+const dinnerJob = new CronJob({
+  cronTime: '* * 18 * * *',
+  onTick: () => {
+    const type = reportController.TYPE_DINNER
+    reportController.ask(type)
+  },
+  start: false,
+  timeZone: 'Asia/Tokyo'
+})
+dinnerJob.start()
+
+const reportJob = new CronJob({
+  cronTime: '* * 20 * * *',
+  onTick: () => {
+    console.log('Send report')
+    reportController.send()
+  },
+  start: false,
+  timeZone: 'Asia/Tokyo'
+})
+reportJob.start()

@@ -15,7 +15,7 @@ class User {
 
   getAllIds() {
     const users = this._getAll()
-    return users.map((value, index) => {
+    return users.map((value) => {
       return value.userId
     })
   }
@@ -36,7 +36,7 @@ class User {
 
   _checkExist(userId) {
     const users = this._getAll()
-    return users.some((value, index) => {
+    return users.some((value) => {
       return value.userId == userId
     })
   }

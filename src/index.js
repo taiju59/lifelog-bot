@@ -1,8 +1,10 @@
 // import modules
 const express = require('express')
 const bodyParser = require('body-parser')
+const exec = require('child_process').exec
 const line = require('./utils/line')
 const userService = require('./services/user')
+const reportController = require('./controllers/report')
 
 // create a new express server
 const app = express()
@@ -19,13 +21,21 @@ app.post('/line', (req, res) => {
     res.send('NG')
     return
   }
-  if (!req.body.events[0].message) {
-    console.log('Not message')
-    res.send('NG')
+  const eventType = req.body.events[0].type
+  if (eventType != 'message' && eventType != 'postback') {
+    console.log('Invalid event type')
     return
   }
-  if (!req.body.events[0].message.text) {
-    console.log('Not text')
+  const userId = req.body.events[0].source.userId
+  let replyText
+  if (eventType == 'message' && req.body.events[0].message.type == 'text') {
+    replyText = req.body.events[0].message.text
+  } else if (eventType == 'postback') {
+    const data = req.body.events[0].postback.data
+    reportController.answer(userId, data)
+    replyText = '回答を受け付けました◎'
+  } else {
+    console.log('Not text nor postback')
     res.send('NG')
     return
   }
@@ -33,23 +43,39 @@ app.post('/line', (req, res) => {
   const replyToken = req.body.events[0].replyToken
   const messages = [{
     type: 'text',
-    text: req.body.events[0].message.text
+    text: replyText
   }]
   line.reply(replyToken, messages)
   // register user
-  const userId = req.body.events[0].source.userId
   console.log('userId: ' + userId)
   userService.addOrNo(userId)
   res.send('OK')
 })
 
-app.post('/multiCast', (req, res) => {
-  console.log('multiCast')
-  const allUserIds = userService.getAllIds()
-  line.multiCast(allUserIds, [{
-    type: 'text',
-    text: 'multiCast!!!'
-  }])
+app.post('/cron', (req, res) => {
+  console.log('/cron')
+  const command = 'node ' + __dirname + '/cron.js'
+  console.log(command)
+  exec(command, (err, stdout, stderr) => {
+    if (err) {
+      console.log(err)
+    }
+    console.log(stdout)
+  })
+  res.send('OK')
+})
+
+app.post('/report/ask/:type', (req, res) => {
+  console.log('/report/ask')
+  const type = req.params.type
+  console.log('type: ' + type)
+  reportController.ask(type)
+  res.send('OK')
+})
+
+app.post('/report/send', (req, res) => {
+  console.log('/report/send')
+  reportController.send()
   res.send('OK')
 })
 
