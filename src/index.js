@@ -14,6 +14,21 @@ app.use(bodyParser.urlencoded({
 
 app.post('/line', (req, res) => {
   console.log('line')
+  if (!req.body.events) {
+    console.log('No events')
+    res.send('NG')
+    return
+  }
+  if (!req.body.events[0].message) {
+    console.log('Not message')
+    res.send('NG')
+    return
+  }
+  if (!req.body.events[0].message.text) {
+    console.log('Not text')
+    res.send('NG')
+    return
+  }
   // reply
   const replyToken = req.body.events[0].replyToken
   const messages = [{
