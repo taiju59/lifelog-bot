@@ -1,4 +1,5 @@
 const fs = require('fs')
+const moment = require('moment')
 
 module.exports = {
   readFileSync(filePath) {
@@ -13,5 +14,10 @@ module.exports = {
     console.log('filePath: ' + filePath)
     console.log('data: ' + data)
     fs.writeFileSync(filePath, data)
+  },
+  timeToString(time, format) {
+    // timeはDate型でもunixタイムスタンプでも可
+    const date = moment.unix(time)
+    return date.format(format)
   }
 }
