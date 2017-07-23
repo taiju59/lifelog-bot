@@ -1,11 +1,13 @@
 const request = require('request')
 
+const LIME_API_ROOT_URL ='https://api.line.me/v2/bot/'
+
 class Line {
 
   reply(replyToken, messages) {
     const options = {
       method: 'POST',
-      uri: 'https://api.line.me/v2/bot/message/reply',
+      uri: LIME_API_ROOT_URL + 'message/reply',
       body: {
         replyToken: replyToken,
         messages: messages
@@ -20,8 +22,22 @@ class Line {
     })
   }
 
-  push() {
-
+  multiCast(userIds, messages) {
+    const options = {
+      method: 'POST',
+      uri: LIME_API_ROOT_URL + 'message/multicast',
+      body: {
+        to: userIds,
+        messages: messages
+      },
+      auth: {
+        bearer: process.env.LINE_CHANNEL_ACCESS_TOKEN
+      },
+      json: true
+    }
+    request(options, (err, response, body) => {
+      console.log(JSON.stringify(response))
+    })
   }
 }
 module.exports = new Line()
