@@ -1,7 +1,7 @@
 // import modules
 const express = require('express')
 const bodyParser = require('body-parser')
-const line = require('./utils/line.js')
+const line = require('./utils/line')
 const userService = require('./services/user')
 
 // create a new express server
