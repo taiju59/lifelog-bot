@@ -1,0 +1,30 @@
+{
+  "name": "lifelog-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/index.js",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taiju59/lifelog-bot.git"
+  },
+  "author": "Taiju Aoki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taiju59/lifelog-bot/issues"
+  },
+  "homepage": "https://github.com/taiju59/lifelog-bot#readme",
+  "dependencies": {
+    "babel-eslint": "^7.2.3",
+    "body-parser": "^1.17.2",
+    "eslint-plugin-import": "^2.7.0",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.3.0"
+  }
+}
