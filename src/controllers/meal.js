@@ -27,19 +27,20 @@ class Meal {
     const userIds = userService.getAllIds()
     const askDate = new Date().getTime()
     mealService.ask(userIds, type, askDate)
+    const sendText = typeText + 'は食べた？'
     line.multiCast(userIds, [{
       'type': 'template',
-      'altText': typeText + '確認',
+      'altText': sendText,
       'template': {
         'type': 'buttons',
-        'text': typeText + 'は食べましたか？',
+        'text': sendText,
         'actions': [{
           'type': 'postback',
-          'label': 'はい',
+          'label': 'うん',
           'data': 'ask=' + askDate + '&answer=true'
         }, {
           'type': 'postback',
-          'label': 'いいえ',
+          'label': '食べてない',
           'data': 'ask=' + askDate + '&answer=false'
         }]
       }
@@ -68,7 +69,7 @@ class Meal {
         return
       }
       // レポートメッセージ生成
-      let mealMessage = 'これまでのレポートをお送りします！\n\n=='
+      let mealMessage = 'これまでのレポートを送るよ！\n\n=='
       for (const meal of userMeals) {
         const askDate = utils.timeToString(meal.askDate, 'MM月DD日(ddd)')
         mealMessage += '\n' + askDate + ' '
@@ -92,7 +93,7 @@ class Meal {
         }
         mealMessage += '\n'
       }
-      mealMessage += '==\n\nこれからも頑張りましょう♪'
+      mealMessage += '==\n\nこれからも頑張ろうね♪'
       // レポート送信
       line.push(userId, [{
         type: 'text',
