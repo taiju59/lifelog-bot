@@ -5,6 +5,7 @@ const exec = require('child_process').exec
 const line = require('./utils/line')
 const userService = require('./services/user')
 const mealController = require('./controllers/meal')
+const remindController = require('./controllers/remind')
 
 // create a new express server
 const app = express()
@@ -76,6 +77,14 @@ app.post('/meal/ask/:type', (req, res) => {
 app.post('/meal/report', (req, res) => {
   console.log('/meal/report')
   mealController.send()
+  res.send('OK')
+})
+
+app.post('/remind/:type', (req, res) => {
+  console.log('/remind')
+  const type = req.params.type
+  console.log('type: ' + type)
+  remindController.ask(type)
   res.send('OK')
 })
 

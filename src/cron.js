@@ -53,7 +53,8 @@ const morningRemindJob = new CronJob({
   cronTime: '* * 8 * * *',
   onTick: () => {
     console.log('Moring remind')
-    remindController.askMorning()
+    const type = remindController.TYPE_MORNING
+    remindController.ask(type)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
@@ -63,8 +64,8 @@ morningRemindJob.start()
 const nightRemindJob = new CronJob({
   cronTime: '* * 23 * * *',
   onTick: () => {
-    console.log('Night remind')
-    remindController.askNight()
+    const type = remindController.TYPE_NIGHT
+    remindController.ask(type)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
