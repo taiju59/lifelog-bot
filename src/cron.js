@@ -4,12 +4,18 @@ const remindController = require('./controllers/remind')
 
 console.log('start cron')
 
+const MEAL_BREAKFAST = mealController.TYPE_BREAKFAST
+const MEAL_LUNCH = mealController.TYPE_LUNCH
+const MEAL_DINNER = mealController.TYPE_DINNER
+
+const REMIND_MORNING = remindController.TYPE_MORNING
+const REMIND_NIGHT = remindController.TYPE_NIGHT
+
 const breakfastJob = new CronJob({
   cronTime: '0 0 9 * * *',
   onTick: () => {
     console.log('Ask breakfast')
-    const type = mealController.TYPE_BREAKFAST
-    mealController.ask(type)
+    mealController.ask(MEAL_BREAKFAST)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
@@ -19,8 +25,7 @@ breakfastJob.start()
 const lunchJob = new CronJob({
   cronTime: '0 0 12 * * *',
   onTick: () => {
-    const type = mealController.TYPE_LUNCH
-    mealController.ask(type)
+    mealController.ask(MEAL_LUNCH)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
@@ -30,8 +35,7 @@ lunchJob.start()
 const dinnerJob = new CronJob({
   cronTime: '0 0 18 * * *',
   onTick: () => {
-    const type = mealController.TYPE_DINNER
-    mealController.ask(type)
+    mealController.ask(MEAL_DINNER)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
@@ -53,8 +57,7 @@ const morningRemindJob = new CronJob({
   cronTime: '0 0 8 * * *',
   onTick: () => {
     console.log('Moring remind')
-    const type = remindController.TYPE_MORNING
-    remindController.ask(type)
+    remindController.ask(REMIND_MORNING)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
@@ -64,8 +67,7 @@ morningRemindJob.start()
 const nightRemindJob = new CronJob({
   cronTime: '0 0 23 * * *',
   onTick: () => {
-    const type = remindController.TYPE_NIGHT
-    remindController.ask(type)
+    remindController.ask(REMIND_NIGHT)
   },
   start: false,
   timeZone: 'Asia/Tokyo'
