@@ -87,6 +87,7 @@ class Meal {
         if (meal.answer) {
           mealMessage += utils.timeToString(meal.answerDate, 'HH時mm分')
         } else {
+          //TODO: 回答無しといいえを区別
           mealMessage += '無し'
         }
         mealMessage += '\n'
