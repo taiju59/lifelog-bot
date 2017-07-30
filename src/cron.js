@@ -1,5 +1,6 @@
 const CronJob = require('cron').CronJob
 const mealController = require('./controllers/meal')
+const remindController = require('./controllers/remind')
 
 console.log('start cron')
 
@@ -47,3 +48,25 @@ const mealJob = new CronJob({
   timeZone: 'Asia/Tokyo'
 })
 mealJob.start()
+
+const morningRemindJob = new CronJob({
+  cronTime: '* * 8 * * *',
+  onTick: () => {
+    console.log('Moring remind')
+    remindController.askMorning()
+  },
+  start: false,
+  timeZone: 'Asia/Tokyo'
+})
+morningRemindJob.start()
+
+const nightRemindJob = new CronJob({
+  cronTime: '* * 23 * * *',
+  onTick: () => {
+    console.log('Night remind')
+    remindController.askNight()
+  },
+  start: false,
+  timeZone: 'Asia/Tokyo'
+})
+nightRemindJob.start()
