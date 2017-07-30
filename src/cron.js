@@ -5,7 +5,7 @@ const remindController = require('./controllers/remind')
 console.log('start cron')
 
 const breakfastJob = new CronJob({
-  cronTime: '* * 9 * * *',
+  cronTime: '0 0 9 * * *',
   onTick: () => {
     console.log('Ask breakfast')
     const type = mealController.TYPE_BREAKFAST
@@ -28,7 +28,7 @@ const lunchJob = new CronJob({
 lunchJob.start()
 
 const dinnerJob = new CronJob({
-  cronTime: '* * 18 * * *',
+  cronTime: '0 0 18 * * *',
   onTick: () => {
     const type = mealController.TYPE_DINNER
     mealController.ask(type)
@@ -39,7 +39,7 @@ const dinnerJob = new CronJob({
 dinnerJob.start()
 
 const mealJob = new CronJob({
-  cronTime: '* * 20 * * *',
+  cronTime: '0 0 20 * * *',
   onTick: () => {
     console.log('Send report')
     mealController.send()
@@ -50,7 +50,7 @@ const mealJob = new CronJob({
 mealJob.start()
 
 const morningRemindJob = new CronJob({
-  cronTime: '* * 8 * * *',
+  cronTime: '0 0 8 * * *',
   onTick: () => {
     console.log('Moring remind')
     const type = remindController.TYPE_MORNING
@@ -62,7 +62,7 @@ const morningRemindJob = new CronJob({
 morningRemindJob.start()
 
 const nightRemindJob = new CronJob({
-  cronTime: '* * 23 * * *',
+  cronTime: '0 0 23 * * *',
   onTick: () => {
     const type = remindController.TYPE_NIGHT
     remindController.ask(type)

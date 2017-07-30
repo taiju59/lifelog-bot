@@ -6,6 +6,12 @@ const TYPE_MORNING = 'morning'
 const TYPE_NIGHT = 'night'
 
 class Remind {
+  constructor() {
+    this.TYPE_MORNING = TYPE_MORNING
+    this.TYPE_NIGHT = TYPE_NIGHT
+    this.TYPE_NIGHT = TYPE_NIGHT
+  }
+
   ask(type) {
     switch (type) {
       case TYPE_MORNING:

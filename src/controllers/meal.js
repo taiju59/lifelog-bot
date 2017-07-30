@@ -8,6 +8,12 @@ const TYPE_LUNCH = 'lunch'
 const TYPE_DINNER = 'dinner'
 
 class Meal {
+  constructor() {
+    this.TYPE_BREAKFAST = TYPE_BREAKFAST
+    this.TYPE_LUNCH = TYPE_LUNCH
+    this.TYPE_DINNER = TYPE_DINNER
+  }
+
   ask(type) {
     let typeText
     switch (type) {
@@ -21,7 +27,7 @@ class Meal {
         typeText = '夕食'
         break
       default:
-        console.log('Invalid type')
+        console.log(Error('Invalid type'))
         return
     }
     const userIds = userService.getAllIds()
