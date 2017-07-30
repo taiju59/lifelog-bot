@@ -1,1 +1,1 @@
-# lifelog-bot
+# okan-bot
