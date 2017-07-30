@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const exec = require('child_process').exec
 const line = require('./utils/line')
 const userService = require('./services/user')
-const reportController = require('./controllers/report')
+const mealController = require('./controllers/meal')
 
 // create a new express server
 const app = express()
@@ -32,7 +32,7 @@ app.post('/line', (req, res) => {
     replyText = req.body.events[0].message.text
   } else if (eventType == 'postback') {
     const data = req.body.events[0].postback.data
-    reportController.answer(userId, data)
+    mealController.answer(userId, data)
     replyText = '回答を受け付けました◎'
   } else {
     console.log('Not text nor postback')
@@ -65,17 +65,17 @@ app.post('/cron', (req, res) => {
   res.send('OK')
 })
 
-app.post('/report/ask/:type', (req, res) => {
-  console.log('/report/ask')
+app.post('/meal/ask/:type', (req, res) => {
+  console.log('/meal/ask')
   const type = req.params.type
   console.log('type: ' + type)
-  reportController.ask(type)
+  mealController.ask(type)
   res.send('OK')
 })
 
-app.post('/report/send', (req, res) => {
-  console.log('/report/send')
-  reportController.send()
+app.post('/meal/report', (req, res) => {
+  console.log('/meal/report')
+  mealController.send()
   res.send('OK')
 })
 

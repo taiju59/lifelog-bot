@@ -1,13 +1,13 @@
 const utils = require('../utils/utils')
 const line = require('../utils/line')
 const userService = require('../services/user')
-const reportService = require('../services/report')
+const mealService = require('../services/meal')
 
 const TYPE_BREAKFAST = 'breakfast'
 const TYPE_LUNCH = 'lunch'
 const TYPE_DINNER = 'dinner'
 
-class Report {
+class Meal {
   ask(type) {
     let typeText
     switch (type) {
@@ -26,7 +26,7 @@ class Report {
     }
     const userIds = userService.getAllIds()
     const askDate = new Date().getTime()
-    reportService.ask(userIds, type, askDate)
+    mealService.ask(userIds, type, askDate)
     line.multiCast(userIds, [{
       'type': 'template',
       'altText': typeText + '確認',
@@ -46,52 +46,52 @@ class Report {
     //TODO: データの形式を検討した上での処理
     const askDate = data.split('=')[1]
     const answerDate = new Date().getTime()
-    reportService.answer(userId, askDate, answerDate)
+    mealService.answer(userId, askDate, answerDate)
   }
 
   send() {
     const userIds = userService.getAllIds()
-    const reports = reportService.getAll()
+    const meals = mealService.getAll()
     for (const userId of userIds) {
-      const userReports = reports.filter((value, index) => {
+      const userMeals = meals.filter((value, index) => {
         return (value.userId == userId)
       })
-      if (!userReports || userReports.length == 0) {
+      if (!userMeals || userMeals.length == 0) {
         // レポートする内容が存在しない場合
-        console.log('No reports(userId: ' + userId + ')')
+        console.log('No meals(userId: ' + userId + ')')
         return
       }
       // レポートメッセージ生成
-      let reportMessage = 'これまでのレポートをお送りします！\n\n=='
-      for (const report of userReports) {
-        const askDate = utils.timeToString(report.askDate, 'MM月DD日(ddd)')
-        reportMessage += '\n' + askDate + ' '
-        switch (report.type) {
+      let mealMessage = 'これまでのレポートをお送りします！\n\n=='
+      for (const meal of userMeals) {
+        const askDate = utils.timeToString(meal.askDate, 'MM月DD日(ddd)')
+        mealMessage += '\n' + askDate + ' '
+        switch (meal.type) {
           case TYPE_BREAKFAST:
-            reportMessage += '朝食'
+            mealMessage += '朝食'
             break
           case TYPE_LUNCH:
-            reportMessage += '昼食'
+            mealMessage += '昼食'
             break
           case TYPE_DINNER:
-            reportMessage += '夕食'
+            mealMessage += '夕食'
             break
         }
-        reportMessage += '\n回答: '
-        if (report.answer) {
-          reportMessage += utils.timeToString(report.answerDate, 'HH時mm分')
+        mealMessage += '\n回答: '
+        if (meal.answer) {
+          mealMessage += utils.timeToString(meal.answerDate, 'HH時mm分')
         } else {
-          reportMessage += '無し'
+          mealMessage += '無し'
         }
-        reportMessage += '\n'
+        mealMessage += '\n'
       }
-      reportMessage += '==\n\nこれからも頑張りましょう♪'
+      mealMessage += '==\n\nこれからも頑張りましょう♪'
       // レポート送信
       line.push(userId, [{
         type: 'text',
-        text: reportMessage
+        text: mealMessage
       }])
     }
   }
 }
-module.exports = new Report()
+module.exports = new Meal()

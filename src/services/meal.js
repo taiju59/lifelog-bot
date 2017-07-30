@@ -1,8 +1,8 @@
 const utils = require('../utils/utils')
 
-const REPORT_DATA_PATH = __dirname + '/../../data/reports.json'
+const REPORT_DATA_PATH = __dirname + '/../../data/meals.json'
 
-class Report {
+class Meal {
 
   getAll() {
     const json = utils.readFileSync(REPORT_DATA_PATH)
@@ -10,8 +10,8 @@ class Report {
   }
 
   ask(userIds, type, askDate) {
-    const reports = this.getAll()
-    const newReports = userIds.map((value) => {
+    const meals = this.getAll()
+    const newMeals = userIds.map((value) => {
       return {
         userId: value,
         askDate: askDate,
@@ -19,22 +19,22 @@ class Report {
         answer: false
       }
     })
-    Array.prototype.push.apply(reports, newReports)
-    const json = JSON.stringify(reports)
+    Array.prototype.push.apply(meals, newMeals)
+    const json = JSON.stringify(meals)
     utils.writeFileSync(REPORT_DATA_PATH, json)
   }
 
   answer(userId, askDate, answerDate) {
-    const reports = this.getAll()
-    const updatedReports = reports.map((value) => {
+    const meals = this.getAll()
+    const updatedMeals = meals.map((value) => {
       if (value.userId == userId && value.askDate == askDate) {
         value['answer'] = true
         value['answerDate'] = answerDate
       }
       return value
     })
-    const json = JSON.stringify(updatedReports)
+    const json = JSON.stringify(updatedMeals)
     utils.writeFileSync(REPORT_DATA_PATH, json)
   }
 }
-module.exports = new Report()
+module.exports = new Meal()
