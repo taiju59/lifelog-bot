@@ -24,11 +24,11 @@ class Meal {
     utils.writeFileSync(REPORT_DATA_PATH, json)
   }
 
-  answer(userId, askDate, answerDate) {
+  answer(userId, askDate, answer, answerDate) {
     const meals = this.getAll()
     const updatedMeals = meals.map((value) => {
       if (value.userId == userId && value.askDate == askDate) {
-        value['answer'] = true
+        value['answer'] = answer
         value['answerDate'] = answerDate
       }
       return value

@@ -36,7 +36,11 @@ class Meal {
         'actions': [{
           'type': 'postback',
           'label': 'はい',
-          'data': 'ask=' + askDate
+          'data': 'ask=' + askDate + '&answer=true'
+        }, {
+          'type': 'postback',
+          'label': 'いいえ',
+          'data': 'ask=' + askDate + '&answer=false'
         }]
       }
     }])
@@ -44,9 +48,11 @@ class Meal {
 
   answer(userId, data) {
     //TODO: データの形式を検討した上での処理
-    const askDate = data.split('=')[1]
+    const dataObj = utils.postbackDataToObject(data)
+    const askDate = dataObj.askDate
+    const answer = dataObj.answer
     const answerDate = new Date().getTime()
-    mealService.answer(userId, askDate, answerDate)
+    mealService.answer(userId, askDate, answer, answerDate)
   }
 
   send() {
