@@ -1,6 +1,7 @@
 const request = require('request')
 
 const LIME_API_ROOT_URL ='https://api.line.me/v2/bot/'
+const LINE_CHANNEL_ACCESS_TOKEN =  'Xb7rClhwKbjszeGOymW0Dgj0jPwZJGoZFVIgZ5hFzgq1OWDFS2cYszzYjf9KKyl7wc8iJmFavj2EqGi5yzlqT0Hacgp08NV0b7SRLhs1CvQo6KgLhb8bzmsrFmWj26alGv9mkq07wBLGOdcxGVUi6AdB04t89/1O/w1cDnyilFU='
 
 class Line {
 
@@ -13,7 +14,7 @@ class Line {
         messages: messages
       },
       auth: {
-        bearer: process.env.LINE_CHANNEL_ACCESS_TOKEN
+        bearer: LINE_CHANNEL_ACCESS_TOKEN
       },
       json: true
     }
@@ -31,7 +32,7 @@ class Line {
         messages: messages
       },
       auth: {
-        bearer: process.env.LINE_CHANNEL_ACCESS_TOKEN
+        bearer: LINE_CHANNEL_ACCESS_TOKEN
       },
       json: true
     }
@@ -49,7 +50,7 @@ class Line {
         messages: messages
       },
       auth: {
-        bearer: process.env.LINE_CHANNEL_ACCESS_TOKEN
+        bearer: LINE_CHANNEL_ACCESS_TOKEN
       },
       json: true
     }
