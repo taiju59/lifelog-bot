@@ -1,5 +1,5 @@
 {
-  "name": "lifelog-bot",
+  "name": "okan-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taiju59/lifelog-bot.git"
+    "url": "git+https://github.com/taiju59/okan-bot.git"
   },
   "author": "Taiju Aoki",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/taiju59/lifelog-bot/issues"
+    "url": "https://github.com/taiju59/okan-bot/issues"
   },
-  "homepage": "https://github.com/taiju59/lifelog-bot#readme",
+  "homepage": "https://github.com/taiju59/okan-bot#readme",
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "body-parser": "^1.17.2",
