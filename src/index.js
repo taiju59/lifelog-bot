@@ -10,8 +10,8 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.post('/webhook/:platform', (req, res) => {
-  controllers(req.params.platform, req.body).then((result) => {
+app.post('/webhook/line', (req, res) => {
+  controllers.line(req.body).then((result) => {
     res.send(result)
   })
 })

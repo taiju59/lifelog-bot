@@ -1,6 +1,9 @@
 import moment from 'moment-timezone'
 
 export default {
+  isEmpty(value) {
+    return value == undefined || value == null || value.length == 0
+  },
   timeToString(time, format) {
     // timeはDate型でもunixタイムスタンプでも可
     moment.tz.setDefault('Asia/Tokyo')
