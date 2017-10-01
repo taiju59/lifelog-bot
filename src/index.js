@@ -20,3 +20,6 @@ const port = config.app.port
 app.listen(port, () => {
   console.log('server starting on PORT:' + port)
 })
+
+// promiceでのエラー内容を見られるようにする
+process.on('unhandledRejection', console.dir)
