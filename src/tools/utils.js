@@ -1,6 +1,6 @@
-const moment = require('moment-timezone')
+import moment from 'moment-timezone'
 
-module.exports = {
+export default {
   timeToString(time, format) {
     // timeはDate型でもunixタイムスタンプでも可
     moment.tz.setDefault('Asia/Tokyo')

@@ -1,5 +1,7 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+import express from 'express'
+import bodyParser from 'body-parser'
+import config from 'config'
+import controllers from './controllers'
 
 const app = express()
 
@@ -8,11 +10,13 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-app.post('/line', (req, res) => {
-  res.send('OK')
+app.post('/webhook/:platform', (req, res) => {
+  controllers(req.params.platform, req.body).then((result) => {
+    res.send(result)
+  })
 })
 
-const port = process.env.PORT || 3000
+const port = config.app.port
 app.listen(port, () => {
   console.log('server starting on PORT:' + port)
 })
