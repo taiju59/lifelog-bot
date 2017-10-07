@@ -1,14 +1,17 @@
 import Sequelize from 'sequelize'
 
 export default function (sequelize) {
-  return sequelize.define('lineData', {
+  return sequelize.define('userReminder', {
     userId: {
       type: Sequelize.INTEGER,
       allowNull: false
     },
-    lineUserId: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    time: {
+      type: Sequelize.TIME
     }
   })
 }

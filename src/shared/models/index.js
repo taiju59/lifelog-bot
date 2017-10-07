@@ -1,8 +1,9 @@
 import Sequelize from 'sequelize'
 import config from 'config'
 import user from './user'
-import lineData from './lineData'
-import reminder from './reminder'
+import userLineData from './userLineData'
+import userReminder from './userReminder'
+import userState from './userState'
 
 const sequelize = new Sequelize(
   config.database.name,
@@ -11,12 +12,15 @@ const sequelize = new Sequelize(
   config.database.options
 )
 const User = user(sequelize)
-const LineData = lineData(sequelize)
-const Reminder = reminder(sequelize)
+const UserLineData = userLineData(sequelize)
+const UserReminder = userReminder(sequelize)
+const UserState = userState(sequelize)
 
-User.hasOne(LineData, {foreignKey:'userId'})
-User.hasMany(Reminder, {foreignKey:'userId'})
+User.hasOne(UserLineData, {foreignKey:'userId'})
+User.hasMany(UserReminder, {foreignKey:'userId'})
+User.hasMany(UserState, {foreignKey:'userId'})
 
 exports.User = User
-exports.LineData = LineData
-exports.Reminder = Reminder
+exports.UserLineData = UserLineData
+exports.UserReminder = UserReminder
+exports.UserState = UserState

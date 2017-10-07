@@ -1,18 +1,23 @@
 import models from '../src/shared/models'
 
 const createTables = async () => {
+  console.log('createTables...')
   await models.User.sync({
     force: true
   })
   console.log('User table created.')
-  await models.LineData.sync({
+  await models.UserLineData.sync({
     force: true
   })
-  console.log('LineData table created.')
-  await models.Reminder.sync({
+  console.log('UserLineData table created.')
+  await models.UserReminder.sync({
     force: true
   })
-  console.log('Reminder table created.')
+  console.log('UserReminder table created.')
+  await models.UserState.sync({
+    force: true
+  })
+  console.log('UserState table created.')
 }
 
 createTables().then(() => {

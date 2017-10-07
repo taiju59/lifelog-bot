@@ -3,7 +3,7 @@ import models from '../../models'
 export default class Line {
 
   static async getByLineUserId(lineUserId) {
-    const lineUser = await models.LineData.findOne({
+    const lineUser = await models.UserLineData.findOne({
       where: {
         lineUserId: lineUserId
       }
@@ -15,7 +15,7 @@ export default class Line {
   }
 
   async getLineUserId(userId) {
-    const lineData = await models.LineData.findOne({
+    const lineData = await models.UserLineData.findOne({
       where: {
         userId: userId
       }
@@ -30,7 +30,7 @@ export default class Line {
       platform: 'line',
       isActive: true
     })
-    await models.LineData.create({
+    await models.UserLineData.create({
       userId: user.id,
       lineUserId: lineUserId
     })
