@@ -1,7 +1,7 @@
 import config from 'config'
 import utils from '../../../tools/utils'
+import LineBotWrapper from '../../../tools/LineBotWrapper'
 import services from '../../../shared/services'
-import LineBot from '../../../libs/bots/LineBot'
 import message from './message'
 
 export default async (event) => {
@@ -35,7 +35,7 @@ const _getLineUserId = (event) => {
 }
 
 const _handleEvent = async (user, event) => {
-  const bot = new LineBot(config.line.channelAccessToken, event.replyToken)
+  const bot = new LineBotWrapper(user.id, config.line.channelAccessToken, event.replyToken)
   // TODO: 状態に応じて各コントローラ呼び出し
   switch (event.type) {
     case 'message':

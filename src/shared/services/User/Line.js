@@ -14,6 +14,16 @@ export default class Line {
     return await models.User.findById(lineUser.userId)
   }
 
+  async getLineUserId(userId) {
+    const lineData = await models.LineData.findOne({
+      where: {
+        userId: userId
+      }
+    })
+    if (lineData == null) return
+    return lineData.lineUserId
+  }
+
   static async create(lineUserId) {
     // TODO: トランザクションで対応
     const user = await models.User.create({

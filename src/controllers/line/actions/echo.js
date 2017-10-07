@@ -5,7 +5,7 @@ export default async (bot, user, event) => {
     //TODO: 例外メッセージ
     return
   }
-  await bot.reply([{
+  await bot.send([{
     type: 'text',
     text: event.message.text
   }])
