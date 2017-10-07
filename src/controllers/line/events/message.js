@@ -6,7 +6,7 @@ export default async (bot, user, event) => {
       await _matchText(bot, user, event)
       break
     default:
-      //TODO: 例外メッセージ
+      await actions.help(bot)
   }
 }
 
@@ -16,6 +16,6 @@ const _matchText = async (bot, user, event) => {
       await actions.askReminder(bot, user, event)
       break
     default:
-      //TODO: 例外メッセージ
+      await actions.help(bot)
   }
 }
