@@ -1,5 +1,11 @@
 import echo from './echo'
+import askReminder from './askReminder'
+import hearReminder from './hearReminder'
+import confirmReminder from './confirmReminder'
 
 export default {
-  echo
+  echo,
+  askReminder,
+  hearReminder,
+  confirmReminder
 }
