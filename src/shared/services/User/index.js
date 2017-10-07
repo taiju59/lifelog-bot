@@ -1,8 +1,12 @@
+import User from './User'
 import Line from './Line'
 import UserState from './UserState'
 import UserReminder from './UserReminder'
 
 export default {
+  async setActive(userId, isActive) {
+    return await User.setActive(userId, isActive)
+  },
   async getByLineUserId(lineUserId) {
     return await Line.getByLineUserId(lineUserId)
   },
