@@ -2,6 +2,7 @@ import config from 'config'
 import services from '../../shared/services'
 import utils from '../../tools/utils'
 import LineBotWrapper from '../../tools/LineBotWrapper'
+import actions from './actions'
 import eventHandler from './events'
 import stateHandler from './states'
 
@@ -25,6 +26,11 @@ export default async (arg) => {
   }
 
   const bot = new LineBotWrapper(user.id, config.line.channelAccessToken, event.replyToken)
+  const isMatchGlobal = await _matchGlobal(bot, user, event)
+  if (isMatchGlobal) {
+    return 'OK'
+  }
+
   const state = await services.User.getState(user.id)
   if (utils.isEmpty(state)) {
     // イベントの内容に応じてハンドリング
@@ -49,4 +55,26 @@ const _getLineUserId = (event) => {
     return
   }
   return lineUserId
+}
+
+const _matchGlobal = async (bot, user, event) => {
+  if (event.message.type != 'text') {
+    return false
+  }
+  switch (event.message.text) {
+    case '追加':
+      await actions.askReminder(bot, user)
+      return true
+    case '一覧':
+      // TODO: 実装
+      return true
+    case 'キャンセル':
+      await actions.cancel(bot, user)
+      return true
+    case 'ヘルプ':
+      await actions.help(bot)
+      return true
+    default:
+      return false
+  }
 }

@@ -11,11 +11,6 @@ export default async (bot, user, event) => {
 }
 
 const _matchText = async (bot, user, event) => {
-  switch (event.message.text) {
-    case '追加':
-      await actions.askReminder(bot, user, event)
-      break
-    default:
-      await actions.help(bot)
-  }
+  // TODO: 雑談
+  await actions.help(bot)
 }
