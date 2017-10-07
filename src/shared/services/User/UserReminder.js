@@ -9,4 +9,12 @@ export default class UserReminder {
       time: time
     })
   }
+
+  static async getAll(userId) {
+    return await models.UserReminder.findAll({
+      where: {
+        userId: userId
+      }
+    })
+  }
 }

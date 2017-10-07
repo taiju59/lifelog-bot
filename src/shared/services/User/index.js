@@ -27,5 +27,8 @@ export default {
   },
   async addReminder(userId, name, time = null) {
     return await UserReminder.add(userId, name, time = null)
+  },
+  async getAllReminder(userId) {
+    return await UserReminder.getAll(userId)
   }
 }

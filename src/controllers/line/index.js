@@ -66,7 +66,7 @@ const _matchGlobal = async (bot, user, event) => {
       await actions.askReminder(bot, user)
       return true
     case '一覧':
-      // TODO: 実装
+      await actions.showReminder(bot, user)
       return true
     case 'キャンセル':
       await actions.cancel(bot, user)

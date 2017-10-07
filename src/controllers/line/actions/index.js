@@ -4,6 +4,7 @@ import help from './help'
 import askReminder from './askReminder'
 import hearReminder from './hearReminder'
 import confirmReminder from './confirmReminder'
+import showReminder from './showReminder'
 
 export default {
   echo,
@@ -11,5 +12,6 @@ export default {
   help,
   askReminder,
   hearReminder,
-  confirmReminder
+  confirmReminder,
+  showReminder
 }
