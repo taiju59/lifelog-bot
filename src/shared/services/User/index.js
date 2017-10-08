@@ -40,6 +40,9 @@ export default {
   async getReminderFromTime(min, max) {
     return await UserReminder.getFromTime(min, max)
   },
+  async setReminderName(reminderId, name) {
+    return await UserReminder.setName(reminderId, name)
+  },
   async setRemindTime(reminderId, time) {
     return await UserReminder.setTime(reminderId, time)
   }

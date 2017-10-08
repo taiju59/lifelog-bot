@@ -42,6 +42,16 @@ export default class UserReminder {
     })
   }
 
+  static async setName(reminderId, name) {
+    return await models.UserReminder.update({
+      name: name
+    }, {
+      where: {
+        id: reminderId
+      }
+    })
+  }
+
   static async setTime(reminderId, time) {
     return await models.UserReminder.update({
       time: time

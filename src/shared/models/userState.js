@@ -8,7 +8,13 @@ export default function (sequelize) {
       unique: true
     },
     name: {
-      type: Sequelize.ENUM('hearReminder', 'confirmReminder', 'selectReminder', 'editReminder'),
+      type: Sequelize.ENUM(
+        'hearReminder',
+        'confirmReminder',
+        'selectReminder',
+        'editReminder',
+        'editReminderName'
+      ),
       allowNull: false
     },
     argument: {
