@@ -15,12 +15,32 @@ export default async (bot, user, event, state) => {
 }
 
 const _register = async (bot, user, state) => {
-  await services.User.addReminder(user.id, state.argument)
+  const reminder = await services.User.addReminder(user.id, state.argument)
   await services.User.removeState(user.id)
-  // TODO: 通知時刻設定フェーズに入る
   await bot.send([{
     type: 'text',
-    text: `は〜い、「${state.argument}」で登録したよ`
+    text: `は〜い、「${reminder.name}」で登録したよ`
+  }, {
+    type: 'template',
+    altText: 'で、どうする？',
+    template: {
+      type: 'buttons',
+      text: 'で、どうする？',
+      actions: [{
+        type: 'datetimepicker',
+        label: '時刻を設定',
+        mode: 'time',
+        data: `action=setRemindTime&reminderId=${reminder.id}`
+      }, {
+        type: 'message',
+        label: 'さらに追加',
+        text: '追加'
+      }, {
+        type: 'message',
+        label: '一覧を見る',
+        text: '一覧'
+      }]
+    }
   }])
 }
 

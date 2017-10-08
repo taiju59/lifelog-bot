@@ -25,10 +25,16 @@ export default {
   async removeState(userId) {
     await UserState.removeState(userId)
   },
+  async getReminder(reminderId) {
+    return await UserReminder.get(reminderId)
+  },
   async addReminder(userId, name, time = null) {
     return await UserReminder.add(userId, name, time = null)
   },
   async getAllReminder(userId) {
     return await UserReminder.getAll(userId)
+  },
+  async setRemindTime(reminderId, time) {
+    return await UserReminder.setTime(reminderId, time)
   }
 }

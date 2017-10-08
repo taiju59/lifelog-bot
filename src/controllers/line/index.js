@@ -58,6 +58,9 @@ const _getLineUserId = (event) => {
 }
 
 const _matchGlobal = async (bot, user, event) => {
+  if (!event.message) {
+    return false
+  }
   if (event.message.type != 'text') {
     return false
   }

@@ -4,10 +4,21 @@ export default {
   isEmpty(value) {
     return value == undefined || value == null || value.length == 0
   },
-  timeToString(time, format) {
-    // timeはDate型でもunixタイムスタンプでも可
-    moment.tz.setDefault('Asia/Tokyo')
-    return moment(time).format(format)
+  jstToUtc(time, format) {
+    const timeArray = time.split(' ')[0].split(':')
+    const timeObject = {
+      hour: timeArray[0],
+      minute: timeArray[1]
+    }
+    return moment.tz(timeObject, 'Asia/Tokyo').utc().format(format)
+  },
+  utcToJst(time, format) {
+    const timeArray = time.split(' ')[0].split(':')
+    const timeObject = {
+      hour: timeArray[0],
+      minute: timeArray[1]
+    }
+    return moment(timeObject).tz('Asia/Tokyo').format(format)
   },
   postbackDataToObject(data) {
     const array = data.split('&')

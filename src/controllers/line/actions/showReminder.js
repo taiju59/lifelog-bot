@@ -11,7 +11,13 @@ export default async (bot, user, event, state) => {
     return
   }
   const remindersText = reminders.map((reminder, index) => {
-    return `(${index + 1})\n${reminder.name}`
+    let text = `(${index + 1})`
+    if (reminder.time) {
+      const time = utils.utcToJst(reminder.time, 'HH:mm')
+      text += ` ${time}`
+    }
+    text += `\n${reminder.name}`
+    return text
   }).join('\n\n')
   await bot.send([{
     type: 'text',

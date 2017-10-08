@@ -1,5 +1,6 @@
 import services from '../../../shared/services'
 import message from './message'
+import postback from './postback'
 
 export default async (bot, user, event) => {
   switch (event.type) {
@@ -12,9 +13,11 @@ export default async (bot, user, event) => {
     case 'unfollow':
       await services.User.setActive(user.id, false)
       break
+    case 'postback':
+      await postback(bot, user, event)
+      break
     case 'join':
     case 'leave':
-    case 'postback':
     case 'beacon':
       // DO NOTHING
       break
