@@ -22,6 +22,18 @@ export default class UserReminder {
     })
   }
 
+  static async getFromTime(min, max) {
+    // min <= time AND time < max
+    return await models.UserReminder.findAll({
+      where: {
+        time: {
+          gte: min,
+          lt: max
+        }
+      }
+    })
+  }
+
   static async setTime(reminderId, time) {
     return await models.UserReminder.update({
       time: time
