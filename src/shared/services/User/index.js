@@ -16,8 +16,8 @@ export default {
   async createLineUser(lineUserId) {
     return await Line.create(lineUserId)
   },
-  async addOrSetState(userId, name, argument = null) {
-    return await UserState.addOrSetState(userId, name, argument)
+  async setState(userId, name, argument = null) {
+    return await UserState.setState(userId, name, argument)
   },
   async getState(userId) {
     return await UserState.getState(userId)

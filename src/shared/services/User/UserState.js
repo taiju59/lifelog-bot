@@ -2,7 +2,7 @@ import models from '../../models'
 
 export default class UserState {
 
-  static async addOrSetState(userId, name, argument = null) {
+  static async setState(userId, name, argument = null) {
     const state = await UserState.getState(userId)
     if (state == null) {
       return await models.UserState.create({

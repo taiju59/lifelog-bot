@@ -9,7 +9,7 @@ export default async (bot, user, event) => {
     return
   }
   const messageText = event.message.text
-  await services.User.addOrSetState(user.id, 'confirmReminder', messageText)
+  await services.User.setState(user.id, 'confirmReminder', messageText)
   await bot.send([{
     type: 'template',
     altText: `「${messageText}」でいいかな？`,
