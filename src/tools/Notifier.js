@@ -5,13 +5,10 @@ import LineBot from '../libs/bots/LineBot'
 
 export default class Notifier {
 
-  constructor(date) {
-    this.date = date
-  }
-
-  async checkOrSend() {
+  static async checkOrSend() {
+    console.log('call')
     // 対象のリマインダーを取得
-    const mmt = moment(this.date)
+    const mmt = moment(new Date())
     const min = mmt.format('HH:mm')
     const max = mmt.add(1, 'minutes').format('HH:mm')
     const reminders = await services.User.getReminderFromTime(min, max)

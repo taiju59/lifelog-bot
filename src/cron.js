@@ -5,7 +5,7 @@ console.log('start cron')
 
 new cron.CronJob({
   cronTime: '0 * * * * *', // 1分ごと
-  onTick: new Notifier(new Date()).checkOrSend(),
+  onTick: Notifier.checkOrSend,
   start: true
 })
 
