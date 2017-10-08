@@ -1,4 +1,5 @@
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event, state) => {
   if (event.message.type != 'text') {
@@ -17,7 +18,7 @@ export default async (bot, user, event, state) => {
 const _register = async (bot, user, state) => {
   const reminder = await services.User.addReminder(user.id, state.argument)
   await services.User.removeState(user.id)
-  await bot.send([{
+  await bot.send([Stickers.registered(), {
     type: 'text',
     text: `は〜い、「${reminder.name}」で登録したよ`
   }, {
@@ -45,7 +46,7 @@ const _register = async (bot, user, state) => {
 }
 
 const _except = async (bot) => {
-  await bot.send([{
+  await bot.send([Stickers.badMessage(), {
     type: 'text',
     text: '「登録」か「キャンセル」で答えてね'
   }])

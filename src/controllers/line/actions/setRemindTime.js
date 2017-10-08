@@ -1,5 +1,6 @@
 import utils from '../../../tools/utils'
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, data) => {
   if (utils.isEmpty(data.time)) {
@@ -10,7 +11,7 @@ export default async (bot, user, data) => {
   await services.User.setRemindTime(data.reminderId, utcStr)
   const reminder = await services.User.getReminder(data.reminderId)
   const jstStr = utils.utcToJst(reminder.time, 'H時m分')
-  await bot.send([{
+  await bot.send([Stickers.edited(), {
     type: 'text',
     text: `は〜い、「${reminder.name}」を ${jstStr} に知らせるね`
   }])

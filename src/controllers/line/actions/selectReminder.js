@@ -1,4 +1,5 @@
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event) => {
   if (event.message.type != 'text' || !event.message.text.match(/[0-9]+/)) {
@@ -18,14 +19,14 @@ export default async (bot, user, event) => {
 }
 
 const _except = async (bot) => {
-  await bot.send([{
+  await bot.send([Stickers.badMessage(), {
     type: 'text',
     text: 'リマインダーの番号を数字で送ってね'
   }])
 }
 
 const _notExist = async (bot, num) => {
-  await bot.send([{
+  await bot.send([Stickers.notExist(), {
     type: 'text',
     text: `${num}？そんなもの、ウチにはないよ`
   }])

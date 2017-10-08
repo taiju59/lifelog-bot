@@ -1,6 +1,7 @@
+import Stickers from '../../../views/Stickers'
 
 export default async (bot) => {
-  await bot.send([{
+  await bot.send([Stickers.help(), {
     type: 'text',
     text: _description
   }])

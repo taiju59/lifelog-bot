@@ -1,10 +1,11 @@
 import utils from '../../../tools/utils'
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event, state) => {
   const reminders = await services.User.getAllReminder(user.id)
   if (utils.isEmpty(reminders)) {
-    await bot.send([{
+    await bot.send([Stickers.notExist(), {
       type: 'text',
       text: '登録されてるリマインダーがないよ。'
     }])
@@ -20,7 +21,7 @@ export default async (bot, user, event, state) => {
     text += `\n${reminder.name}`
     return text
   }).join('\n\n')
-  await bot.send([{
+  await bot.send([Stickers.showReminder(), {
     type: 'text',
     text: `[一覧]\n${remindersText}`
   }, {

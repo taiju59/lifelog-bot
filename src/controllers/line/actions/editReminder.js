@@ -1,5 +1,6 @@
 import utils from '../../../tools/utils'
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event, state) => {
   if (event.message.type != 'text') {
@@ -38,7 +39,7 @@ const _delete = async (bot, user, state) => {
     return
   }
   await services.User.removeReminder(state.argument)
-  await bot.send([{
+  await bot.send([Stickers.edited(), {
     type: 'template',
     altText: `「${reminder.name}」を削除したよ`,
     template: {
@@ -55,7 +56,7 @@ const _delete = async (bot, user, state) => {
 }
 
 const _except = async (bot) => {
-  await bot.send([{
+  await bot.send([Stickers.badMessage(), {
     type: 'template',
     altText: 'え、なに？他のも見る？',
     template: {
@@ -72,7 +73,7 @@ const _except = async (bot) => {
 
 const _notExist = async (bot, user) => {
   await services.User.removeState(user.id)
-  await bot.send([{
+  await bot.send([Stickers.notExist(), {
     type: 'template',
     altText: 'あれ？それもうないみたいよ',
     template: {

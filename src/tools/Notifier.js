@@ -2,6 +2,7 @@ import config from 'config'
 import moment from 'moment-timezone'
 import services from '../shared/services'
 import LineBot from '../libs/bots/LineBot'
+import Stickers from '../views/Stickers'
 
 export default class Notifier {
 
@@ -17,7 +18,7 @@ export default class Notifier {
     const bot = new LineBot(config.line.channelAccessToken)
     for (const reminder of reminders) {
       const lineUserId = await services.User.getLineUserId(reminder.userId)
-      await bot.send(lineUserId, [{
+      await bot.send(lineUserId, [Stickers.notify(), {
         type: 'text',
         text: `「${reminder.name}」の時間ですよ〜`
       }])

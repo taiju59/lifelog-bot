@@ -1,5 +1,6 @@
 import utils from '../../../tools/utils'
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event, state) => {
   if (event.message.type != 'text') {
@@ -13,7 +14,7 @@ export default async (bot, user, event, state) => {
   }
   const newName = event.message.text
   await services.User.setReminderName(reminder.id, newName)
-  await bot.send([{
+  await bot.send([Stickers.edited(), {
     type: 'template',
     altText: `「${reminder.name}」を「${newName}」に変更したよ`,
     template: {
@@ -30,7 +31,7 @@ export default async (bot, user, event, state) => {
 }
 
 const _except = async (bot) => {
-  await bot.send([{
+  await bot.send([Stickers.badMessage(), {
     type: 'text',
     text: '名前はテキストで教えてね'
   }])
@@ -38,7 +39,7 @@ const _except = async (bot) => {
 
 const _notExist = async (bot, user) => {
   await services.User.removeState(user.id)
-  await bot.send([{
+  await bot.send([Stickers.notExist(), {
     type: 'template',
     altText: 'あれ？これもうないみたいよ',
     template: {

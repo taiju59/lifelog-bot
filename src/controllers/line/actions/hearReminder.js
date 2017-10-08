@@ -1,8 +1,9 @@
 import services from '../../../shared/services'
+import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event) => {
   if (event.message.type != 'text') {
-    await bot.send([{
+    await bot.send([Stickers.badMessage(), {
       type: 'text',
       text: '名前はテキストで教えてね'
     }])
