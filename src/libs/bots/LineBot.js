@@ -2,7 +2,7 @@ import request from 'request'
 
 export default class LineBot {
 
-  constructor(channelAccessToken, replyToken) {
+  constructor(channelAccessToken, replyToken = null) {
     this.channelAccessToken = channelAccessToken
     this.replyToken = replyToken
   }
@@ -22,7 +22,7 @@ export default class LineBot {
   async send(userId, messages) {
     if (Array.isArray(userId)) {
       await this._multiCast(userId, messages)
-    } else if (userId instanceof String) {
+    } else if (typeof userId == 'string') {
       await this._push(userId, messages)
     } else {
       console.log(Error('Invalid type of userId: ' + userId))

@@ -14,7 +14,7 @@ export default class Line {
     return await models.User.findById(lineUser.userId)
   }
 
-  async getLineUserId(userId) {
+  static async getLineUserId(userId) {
     const lineData = await models.UserLineData.findOne({
       where: {
         userId: userId
