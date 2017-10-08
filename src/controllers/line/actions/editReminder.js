@@ -39,8 +39,17 @@ const _delete = async (bot, user, state) => {
   }
   await services.User.removeReminder(state.argument)
   await bot.send([{
-    type: 'text',
-    text: `「${reminder.name}」を削除したよ`
+    type: 'template',
+    altText: `「${reminder.name}」を削除したよ`,
+    template: {
+      type: 'buttons',
+      text: `「${reminder.name}」を削除したよ`,
+      actions: [{
+        type: 'message',
+        label: '一覧を見る',
+        text: '一覧'
+      }]
+    }
   }])
   await services.User.removeState(user.id)
 }
