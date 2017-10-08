@@ -19,7 +19,7 @@ export default async (bot, user, event, state) => {
 }
 
 const _editName = async (bot, user, state) => {
-  const reminder = await services.User.getReminde(state.argument)
+  const reminder = await services.User.getReminder(state.argument)
   if (utils.isEmpty(reminder)) {
     await _notExist(bot, user)
     return
@@ -32,7 +32,7 @@ const _editName = async (bot, user, state) => {
 }
 
 const _delete = async (bot, user, state) => {
-  const reminder = await services.User.getReminde(state.argument)
+  const reminder = await services.User.getReminder(state.argument)
   if (utils.isEmpty(reminder)) {
     await _notExist(bot, user)
     return
