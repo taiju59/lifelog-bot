@@ -42,6 +42,7 @@ const _delete = async (bot, user, state) => {
     type: 'text',
     text: `「${reminder.name}」を削除したよ`
   }])
+  await services.User.removeState(user.id)
 }
 
 const _except = async (bot) => {
