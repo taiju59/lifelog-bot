@@ -10,6 +10,7 @@ export default async (bot, user, event, state) => {
     }])
     return
   }
+  await services.User.setState(user.id, 'selectReminder')
   const remindersText = reminders.map((reminder, index) => {
     let text = `(${index + 1})`
     if (reminder.time) {
@@ -21,9 +22,9 @@ export default async (bot, user, event, state) => {
   }).join('\n\n')
   await bot.send([{
     type: 'text',
-    text: '登録されているリマインダー一覧はこれだよ'
+    text: `[一覧]\n${remindersText}`
   }, {
     type: 'text',
-    text: remindersText
+    text: '編集・削除する場合は対象の番号を教えてね'
   }])
 }

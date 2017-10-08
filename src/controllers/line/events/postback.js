@@ -7,7 +7,7 @@ export default async (bot, user, event) => {
   Object.assign(data, event.postback.params)
   switch (data.action) {
     case 'setRemindTime':
-      await actions.setRemindTime(bot, data)
+      await actions.setRemindTime(bot, user, data)
       break
     default:
       await actions.help(bot)

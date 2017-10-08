@@ -1,7 +1,7 @@
 import utils from '../../../tools/utils'
 import services from '../../../shared/services'
 
-export default async (bot, data) => {
+export default async (bot, user, data) => {
   if (utils.isEmpty(data.time)) {
     console.log(Error(`data.time is empty(data: ${JSON.stringify(data)})`))
     return
@@ -14,4 +14,5 @@ export default async (bot, data) => {
     type: 'text',
     text: `は〜い、「${reminder.name}」を ${jstStr} に知らせるね`
   }])
+  await services.User.removeState(user.id)
 }

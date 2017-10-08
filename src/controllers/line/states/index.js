@@ -8,7 +8,10 @@ export default async (bot, user, event, state) => {
     case 'confirmReminder':
       await actions.confirmReminder(bot, user, event, state)
       break
+    case 'selectReminder':
+      await actions.selectReminder(bot, user, event)
+      break
     default:
-      console.log(Error('Invalid arguments(state): ' + state))
+      console.log(Error('Invalid arguments(state): ' + JSON.stringify(state)))
   }
 }

@@ -6,6 +6,7 @@ import hearReminder from './hearReminder'
 import confirmReminder from './confirmReminder'
 import setRemindTime from './setRemindTime'
 import showReminder from './showReminder'
+import selectReminder from './selectReminder'
 
 export default {
   echo,
@@ -15,5 +16,6 @@ export default {
   hearReminder,
   confirmReminder,
   setRemindTime,
-  showReminder
+  showReminder,
+  selectReminder
 }

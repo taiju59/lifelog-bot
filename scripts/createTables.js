@@ -23,3 +23,6 @@ const createTables = async () => {
 createTables().then(() => {
   console.log('Finish.')
 })
+
+// promiceでのエラー内容を見られるようにする
+process.on('unhandledRejection', console.dir)
