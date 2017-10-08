@@ -26,13 +26,18 @@ export default async (arg) => {
   }
 
   const bot = new LineBotWrapper(user.id, config.line.channelAccessToken, event.replyToken)
+  /**
+   * イベント振り分け
+   * 1. どの状態でもマッチするテキストメッセージ(メニューアクション)
+   * 2. stateが空の状態またはメッセージ以外の場合、イベントに応じたアクション
+   * 3. stateに応じたアクション
+   */
   const isMatchGlobal = await _matchGlobal(bot, user, event)
   if (isMatchGlobal) {
     return 'OK'
   }
-
   const state = await services.User.getState(user.id)
-  if (utils.isEmpty(state)) {
+  if (utils.isEmpty(state) || event.type != 'message') {
     // イベントの内容に応じてハンドリング
     await eventHandler(bot, user, event)
   } else {
