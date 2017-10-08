@@ -77,4 +77,3 @@ const _notExist = async (bot, user) => {
     }
   }])
 }
-
