@@ -14,6 +14,14 @@ export default class UserReminder {
     })
   }
 
+  static async remove(reminderId) {
+    await models.UserReminder.destroy({
+      where: {
+        id: reminderId
+      }
+    })
+  }
+
   static async getAll(userId) {
     return await models.UserReminder.findAll({
       where: {

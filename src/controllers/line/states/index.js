@@ -11,6 +11,9 @@ export default async (bot, user, event, state) => {
     case 'selectReminder':
       await actions.selectReminder(bot, user, event)
       break
+    case 'editReminder':
+      await actions.editReminder(bot, user, event, state)
+      break
     default:
       console.log(Error('Invalid arguments(state): ' + JSON.stringify(state)))
   }

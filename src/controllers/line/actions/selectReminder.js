@@ -43,19 +43,14 @@ const _edit = async (bot, reminder) => {
         label: '時刻を編集',
         mode: 'time',
         data: `action=setRemindTime&reminderId=${reminder.id}`
-      // TODO: 名前の編集・削除機能
-      // }, {
-      //   type: 'message',
-      //   label: '名前を編集',
-      //   text: '名前を編集'
-      // }, {
-      //   type: 'message',
-      //   label: '削除',
-      //   text: '削除'
       }, {
         type: 'message',
-        label: '一覧を見る',
-        text: '一覧'
+        label: '名前を編集',
+        text: '名前を編集'
+      }, {
+        type: 'message',
+        label: '削除',
+        text: '削除'
       }]
     }
   }])
