@@ -29,6 +29,10 @@ export default class Stickers {
     return Stickers._create(22) // サングラス
   }
 
+  static deleted() {
+    return Stickers._create(175) // ニヤリ
+  }
+
   /* 異常系 */
   static badMessage() {
     return Stickers._create(169) // 混乱してる

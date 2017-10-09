@@ -21,7 +21,7 @@ export default async (bot, user, event) => {
 const _except = async (bot) => {
   await bot.send([Stickers.badMessage(), {
     type: 'text',
-    text: 'リマインダーの番号を数字で送ってね'
+    text: 'タスクの番号を数字で送ってね'
   }])
 }
 

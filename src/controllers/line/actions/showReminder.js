@@ -7,7 +7,7 @@ export default async (bot, user, event, state) => {
   if (utils.isEmpty(reminders)) {
     await bot.send([Stickers.notExist(), {
       type: 'text',
-      text: '登録されてるリマインダーがないよ。'
+      text: '登録されてるタスクがないよ。'
     }])
     return
   }
@@ -23,7 +23,7 @@ export default async (bot, user, event, state) => {
   }).join('\n\n')
   await bot.send([Stickers.showReminder(), {
     type: 'text',
-    text: `[一覧]\n${remindersText}`
+    text: `[一覧]\n\n${remindersText}`
   }, {
     type: 'text',
     text: '編集・削除する場合は対象の番号を教えてね'
