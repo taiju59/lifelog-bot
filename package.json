@@ -1,34 +1,43 @@
 {
-  "name": "lifelog-bot",
+  "name": "okan-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node src/index.js",
-    "start": "export PORT=3006;node src/index.js",
-    "cron": "export PORT=3006;node src/cron.js"
+    "test": "NODE_ENV=development ./node_modules/babel-cli/bin/babel-node.js src/index.js",
+    "start": "NODE_ENV=production node build/index.js",
+    "test:cron": "NODE_ENV=development ./node_modules/babel-cli/bin/babel-node.js src/cron.js",
+    "cron": "NODE_ENV=production node build/cron.js",
+    "clean": "rm -rf build && mkdir build",
+    "build": "npm run clean && ./node_modules/babel-cli/bin/babel.js -d ./build ./src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taiju59/lifelog-bot.git"
+    "url": "git+https://github.com/taiju59/okan-bot.git"
   },
   "author": "Taiju Aoki",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/taiju59/lifelog-bot/issues"
+    "url": "https://github.com/taiju59/okan-bot/issues"
   },
-  "homepage": "https://github.com/taiju59/lifelog-bot#readme",
+  "homepage": "https://github.com/taiju59/okan-bot#readme",
   "dependencies": {
-    "babel-eslint": "^7.2.3",
     "body-parser": "^1.17.2",
+    "config": "^1.26.2",
     "cron": "^1.2.1",
-    "eslint-plugin-import": "^2.7.0",
     "express": "^4.15.3",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "sequelize": "^4.13.1",
+    "mysql2": "^1.4.2"
   },
   "devDependencies": {
-    "eslint": "^4.3.0"
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-preset-es2015-node6": "^0.4.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.3.0",
+    "eslint-plugin-import": "^2.7.0"
   }
 }

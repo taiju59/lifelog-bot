@@ -16,6 +16,33 @@
     "import"
   ],
   "rules": {
+    "array-bracket-spacing": [2, "never"],
+    "comma-spacing": [2, {
+      "before": false,
+      "after": true
+    }],
+    "comma-style": [2, "last"],
+    "computed-property-spacing": [2, "never"],
+    "no-multiple-empty-lines": [2, {
+      "max": 1
+    }],
+    "func-call-spacing": ["error", "never"],
+    "no-trailing-spaces": 2,
+    "object-curly-spacing": [2, "never"],
+    "semi-spacing": ["error", {
+      "before": false,
+      "after": true
+    }],
+    "space-before-blocks": "error",
+    "space-before-function-paren": ["error", {
+      "anonymous": "always",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
+    "keyword-spacing": ["error", {
+      "before": true,
+      "after": true
+    }],
     "indent": [
       "error",
       2,
@@ -44,17 +71,11 @@
     ],
     "no-console": 0,
     "import/named": "off",
-    "import/default": "off"
+    "import/default": "off",
+    "arrow-spacing": 2,
+    "space-infix-ops": 2
   },
   "settings": {
-    "import/parser": "babel-eslint",
-    "import/resolver": {
-      "node": {
-        "paths": [
-          "./src/libs",
-          "./src/app/shared"
-        ]
-      }
-    }
+    "import/parser": "babel-eslint"
   }
 }
