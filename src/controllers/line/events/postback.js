@@ -9,6 +9,9 @@ export default async (bot, user, event) => {
     case 'setRemindTime':
       await actions.setRemindTime(bot, user, data)
       break
+    case 'answerReminder':
+      await actions.answerReminder(bot, user, data)
+      break
     default:
       await actions.help(bot)
   }

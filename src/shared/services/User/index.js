@@ -2,6 +2,7 @@ import User from './User'
 import Line from './Line'
 import UserState from './UserState'
 import UserReminder from './UserReminder'
+import UserRemindHistory from './UserRemindHistory'
 
 export default {
   async setActive(userId, isActive) {
@@ -45,5 +46,17 @@ export default {
   },
   async setRemindTime(reminderId, time) {
     return await UserReminder.setTime(reminderId, time)
+  },
+  async getRemindHistory(remindHistoryId) {
+    return await UserRemindHistory.get(remindHistoryId)
+  },
+  async addRemindHistory(userId, reminderId) {
+    return await UserRemindHistory.add(userId, reminderId)
+  },
+  async updateRemindHistoryAnswer(remindHistoryId, answer) {
+    return await UserRemindHistory.updateAnswer(remindHistoryId, answer)
+  },
+  async getRemindHistories(userId) {
+    return await UserRemindHistory.getAll(userId)
   }
 }
