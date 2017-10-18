@@ -18,10 +18,10 @@ export default class Notifier {
     const bot = new LineBot(config.line.channelAccessToken)
     for (const reminder of reminders) {
       const lineUserId = await services.User.getLineUserId(reminder.userId)
-      await bot.send(lineUserId, [Stickers.notify(), {
+      await bot.send(lineUserId, [{
         type: 'text',
         text: `「${reminder.name}」の時間ですよ〜`
-      }])
+      }, Stickers.notify()])
     }
   }
 }
