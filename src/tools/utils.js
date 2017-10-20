@@ -28,5 +28,8 @@ export default {
       object[array2[0]] = array2[1]
     }
     return object
+  },
+  random(array) {
+    return array[Math.floor(Math.random() * array.length)]
   }
 }

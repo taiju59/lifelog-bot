@@ -9,6 +9,7 @@ import showReminder from './showReminder'
 import selectReminder from './selectReminder'
 import editReminder from './editReminder'
 import editReminderName from './editReminderName'
+import answerReminder from './answerReminder'
 
 export default {
   echo,
@@ -21,5 +22,6 @@ export default {
   showReminder,
   selectReminder,
   editReminder,
-  editReminderName
+  editReminderName,
+  answerReminder
 }

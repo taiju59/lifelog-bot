@@ -11,6 +11,11 @@ export default async (bot, user, event) => {
 }
 
 const _matchText = async (bot, user, event) => {
+  if (event.message.text === 'やった' || event.message.text === 'やってない') {
+    // タスク通知への回答
+    // TODO: テキストマッチではなくstateなどで判定
+    return
+  }
   // TODO: 雑談
   await actions.help(bot)
 }

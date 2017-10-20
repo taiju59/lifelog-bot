@@ -14,6 +14,10 @@ const createTables = async () => {
     force: true
   })
   console.log('UserReminder table created.')
+  await models.UserRemindHistory.sync({
+    force: true
+  })
+  console.log('UserRemindHistory table created.')
   await models.UserState.sync({
     force: true
   })

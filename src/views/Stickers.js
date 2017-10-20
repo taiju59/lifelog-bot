@@ -33,6 +33,10 @@ export default class Stickers {
     return Stickers._create(175) // ニヤリ
   }
 
+  static done() {
+    return Stickers._create(172) // ハートを出してねだるポーズ
+  }
+
   /* 異常系 */
   static badMessage() {
     return Stickers._create(169) // 混乱してる
