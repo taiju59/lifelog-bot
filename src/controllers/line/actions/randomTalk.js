@@ -1,5 +1,6 @@
 import config from 'config'
 import UserLocalAccess from '../../../libs/UserLocalAccess'
+import SlackAccess from '../../../libs/SlackAccess'
 
 export default async (bot, user, event) => {
   if (event.message.type != 'text') {
@@ -7,6 +8,14 @@ export default async (bot, user, event) => {
     //TODO: 例外メッセージ
     return
   }
+  const userText = event.message.text
+  const slackAccess = new SlackAccess(
+    config.slack.webhookUrl,
+    config.slack.channel,
+    config.app.botName,
+    config.slack.botEmoji
+  )
+  slackAccess.postUserMessage(user.id, userText)
   const profile = await bot.getProfile()
   const userLocalAccess = new UserLocalAccess(
     config.app.botName,
@@ -15,10 +24,11 @@ export default async (bot, user, event) => {
   )
   const replyText = await userLocalAccess.getReply(
     profile.displayName,
-    event.message.text
+    userText
   )
   await bot.send([{
     type: 'text',
     text: replyText
   }])
+  slackAccess.postBotMessage(replyText)
 }
