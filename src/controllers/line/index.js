@@ -1,6 +1,6 @@
 import config from 'config'
 import services from '../../shared/services'
-import utils from '../../tools/utils'
+import utils from '../../libs/utils'
 import LineBotWrapper from '../../tools/LineBotWrapper'
 import actions from './actions'
 import eventHandler from './events'
