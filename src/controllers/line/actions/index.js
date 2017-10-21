@@ -10,6 +10,7 @@ import selectReminder from './selectReminder'
 import editReminder from './editReminder'
 import editReminderName from './editReminderName'
 import answerReminder from './answerReminder'
+import randomTalk from './randomTalk'
 
 export default {
   echo,
@@ -23,5 +24,6 @@ export default {
   selectReminder,
   editReminder,
   editReminderName,
-  answerReminder
+  answerReminder,
+  randomTalk
 }
