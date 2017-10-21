@@ -44,7 +44,7 @@ export default class LineBot {
   }
 
   async _request(uriPath, body) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const options = {
         method: 'POST',
         uri: 'https://api.line.me/v2/bot/' + uriPath,
