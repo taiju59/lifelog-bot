@@ -5,6 +5,9 @@ import UserReminder from './UserReminder'
 import UserRemindHistory from './UserRemindHistory'
 
 export default {
+  async getAllUsers() {
+    return await User.getAll()
+  },
   async setActive(userId, isActive) {
     return await User.setActive(userId, isActive)
   },
@@ -56,7 +59,7 @@ export default {
   async updateRemindHistoryAnswer(remindHistoryId, answer) {
     return await UserRemindHistory.updateAnswer(remindHistoryId, answer)
   },
-  async getRemindHistories(userId) {
-    return await UserRemindHistory.getAll(userId)
+  async getRemindHistories(userId, timeMin = null, timeMax = null) {
+    return await UserRemindHistory.getAll(userId, timeMin, timeMax)
   }
 }
