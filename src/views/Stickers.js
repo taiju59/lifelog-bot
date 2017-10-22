@@ -51,6 +51,23 @@ export default class Stickers {
     return Stickers._create(166) // 応援
   }
 
+  /* 振り返り */
+  static perfect() {
+    return Stickers._create(100) // KISS ME
+  }
+
+  static great() {
+    return Stickers._create(22) // サングラス
+  }
+
+  static good() {
+    return Stickers._create(34) // 穴からひょっこり
+  }
+
+  static zero() {
+    return Stickers._create(164) // キラキラ目
+  }
+
   static _create(stickerId) {
     return {
       type: 'sticker',

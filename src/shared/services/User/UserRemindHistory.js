@@ -13,11 +13,18 @@ export default class UserRemindHistory {
     })
   }
 
-  static async getAll(userId) {
+  static async getAll(userId, timeMin = null, timeMax = null) {
+    const constrains = {
+      userId: userId
+    }
+    if (timeMin !== null || timeMax !== null) {
+      constrains.createdAt = {}
+      // timeMin <= createdAt AND createdAt < timeMax
+      if (timeMin !== null) constrains.createdAt.gte = timeMin
+      if (timeMax !== null) constrains.createdAt.lt = timeMax
+    }
     return await models.UserRemindHistory.findAll({
-      where: {
-        userId: userId
-      }
+      where: constrains
     })
   }
 
