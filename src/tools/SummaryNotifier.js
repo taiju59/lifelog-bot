@@ -3,7 +3,7 @@ import moment from 'moment-timezone'
 import services from '../shared/services'
 import LineBot from '../libs/bots/LineBot'
 import SummaryMessages from '../views/SummaryMessages'
-import utils from './utils'
+import utils from '../libs/utils'
 
 const notifyTime = 10 // 10時に通知
 

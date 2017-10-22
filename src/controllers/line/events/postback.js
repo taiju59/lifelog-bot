@@ -1,4 +1,4 @@
-import utils from '../../../tools/utils'
+import utils from '../../../libs/utils'
 import actions from '../actions'
 
 export default async (bot, user, event) => {

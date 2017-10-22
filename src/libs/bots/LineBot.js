@@ -1,4 +1,5 @@
 import request from 'request'
+import utils from '../utils'
 
 export default class LineBot {
 
@@ -29,6 +30,19 @@ export default class LineBot {
     }
   }
 
+  async getProfile(userId) {
+    const options = {
+      method: 'GET',
+      uri: 'https://api.line.me/v2/bot/profile/' + userId,
+      auth: {
+        bearer: this.channelAccessToken
+      },
+      json: true
+    }
+    const profile = await utils.asyncRequest(options)
+    return profile
+  }
+
   async _multiCast(userIds, messages) {
     await this._request('message/multicast', {
       to: userIds,
@@ -44,7 +58,7 @@ export default class LineBot {
   }
 
   async _request(uriPath, body) {
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const options = {
         method: 'POST',
         uri: 'https://api.line.me/v2/bot/' + uriPath,

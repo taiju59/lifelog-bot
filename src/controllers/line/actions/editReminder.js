@@ -1,4 +1,4 @@
-import utils from '../../../tools/utils'
+import utils from '../../../libs/utils'
 import services from '../../../shared/services'
 import Stickers from '../../../views/Stickers'
 

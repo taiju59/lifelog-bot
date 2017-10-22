@@ -1,4 +1,5 @@
 import moment from 'moment-timezone'
+import request from 'request'
 
 export default {
   isEmpty(value) {
@@ -31,5 +32,17 @@ export default {
   },
   random(array) {
     return array[Math.floor(Math.random() * array.length)]
+  },
+  async asyncRequest(options) {
+    return new Promise((resolve, reject) => {
+      request(options, (err, response, body) => {
+        if (response.statusCode == 200) {
+          resolve(body)
+        } else {
+          reject(body)
+          console.log(Error(JSON.stringify(response)))
+        }
+      })
+    })
   }
 }

@@ -3,7 +3,7 @@ import LineBot from '../libs/bots/LineBot'
 
 export default class LineBotWrapper {
 
-  constructor(userId, channelAccessToken, replyToken) {
+  constructor(userId, channelAccessToken, replyToken = null) {
     this.userId = userId
     this.bot = new LineBot(channelAccessToken, replyToken)
   }
@@ -24,5 +24,11 @@ export default class LineBotWrapper {
       return
     }
     await this.bot.send(lineUserId, messages)
+  }
+
+  async getProfile() {
+    const lineUserId = await services.User.getLineUserId(this.userId)
+    const profile = await this.bot.getProfile(lineUserId)
+    return profile
   }
 }

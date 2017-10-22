@@ -16,6 +16,5 @@ const _matchText = async (bot, user, event) => {
     // TODO: テキストマッチではなくstateなどで判定
     return
   }
-  // TODO: 雑談
-  await actions.help(bot)
+  await actions.randomTalk(bot, user, event)
 }
