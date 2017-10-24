@@ -10,12 +10,15 @@ export default class UserReminder {
     return await models.UserReminder.create({
       userId: userId,
       name: name,
-      time: time
+      time: time,
+      isActive: true
     })
   }
 
-  static async remove(reminderId) {
-    await models.UserReminder.destroy({
+  static async setActive(reminderId, isActive) {
+    return await models.UserReminder.update({
+      isActive: isActive
+    }, {
       where: {
         id: reminderId
       }
@@ -25,7 +28,8 @@ export default class UserReminder {
   static async getAll(userId) {
     return await models.UserReminder.findAll({
       where: {
-        userId: userId
+        userId: userId,
+        isActive: true
       }
     })
   }

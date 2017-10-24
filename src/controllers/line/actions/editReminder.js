@@ -38,7 +38,7 @@ const _delete = async (bot, user, state) => {
     await _notExist(bot, user)
     return
   }
-  await services.User.removeReminder(state.argument)
+  await services.User.setReminderActive(state.argument, false)
   await bot.send([Stickers.deleted(), {
     type: 'template',
     altText: `「${reminder.name}」を削除したよ`,
