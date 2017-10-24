@@ -10,6 +10,11 @@ export default function (sequelize) {
       type: Sequelize.INTEGER,
       allowNull: false
     },
+    isConfirmed: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     answer: {
       type: Sequelize.BOOLEAN
     }

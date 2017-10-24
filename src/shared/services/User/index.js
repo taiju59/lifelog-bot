@@ -56,10 +56,16 @@ export default {
   async addRemindHistory(userId, reminderId) {
     return await UserRemindHistory.add(userId, reminderId)
   },
+  async setRemindHistoryConfirmed(remindHistoryId, isConfirmed = true) {
+    return await UserRemindHistory.setConfirmed(remindHistoryId, isConfirmed)
+  },
   async updateRemindHistoryAnswer(remindHistoryId, answer) {
     return await UserRemindHistory.updateAnswer(remindHistoryId, answer)
   },
   async getRemindHistories(userId, timeMin = null, timeMax = null) {
     return await UserRemindHistory.getAll(userId, timeMin, timeMax)
+  },
+  async getShouldConfirmRemindHistories(timeMax = null) {
+    return await UserRemindHistory.getShouldConfirm(timeMax)
   }
 }
