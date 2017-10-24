@@ -28,6 +28,27 @@ export default class UserRemindHistory {
     })
   }
 
+  static async getShouldConfirm(timeMax = null) {
+    const constrains = {
+      isConfirmed: false
+    }
+    // createdAt < timeMax
+    if (timeMax !== null) constrains.createdAt = {lt: timeMax}
+    return await models.UserRemindHistory.findAll({
+      where: constrains
+    })
+  }
+
+  static async setConfirmed(remindHistoryId, isConfirmed) {
+    return await models.UserRemindHistory.update({
+      isConfirmed: isConfirmed
+    }, {
+      where: {
+        id: remindHistoryId
+      }
+    })
+  }
+
   static async updateAnswer(remindHistoryId, answer) {
     return await models.UserRemindHistory.update({
       answer: answer
