@@ -35,8 +35,8 @@ export default {
   async addReminder(userId, name, time = null) {
     return await UserReminder.add(userId, name, time = null)
   },
-  async removeReminder(reminderId) {
-    return await UserReminder.remove(reminderId)
+  async setReminderActive(reminderId, isActive) {
+    return await UserReminder.setActive(reminderId, isActive)
   },
   async getAllReminder(userId) {
     return await UserReminder.getAll(userId)

@@ -12,6 +12,10 @@ export default function (sequelize) {
     },
     time: {
       type: Sequelize.TIME
+    },
+    isActive: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
     }
   })
 }
