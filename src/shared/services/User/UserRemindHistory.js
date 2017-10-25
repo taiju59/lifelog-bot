@@ -15,7 +15,8 @@ export default class UserRemindHistory {
 
   static async getAll(userId, timeMin = null, timeMax = null) {
     const constrains = {
-      userId: userId
+      userId: userId,
+      isConfirmed: true
     }
     if (timeMin !== null || timeMax !== null) {
       constrains.createdAt = {}
@@ -28,12 +29,16 @@ export default class UserRemindHistory {
     })
   }
 
-  static async getShouldConfirm(timeMax = null) {
+  static async getShouldConfirm(timeMin = null, timeMax = null) {
     const constrains = {
       isConfirmed: false
     }
-    // createdAt <= timeMax
-    if (timeMax !== null) constrains.createdAt = {lte: timeMax}
+    if (timeMin !== null || timeMax !== null) {
+      constrains.createdAt = {}
+      // timeMin <= createdAt AND createdAt < timeMax
+      if (timeMin !== null) constrains.createdAt.gte = timeMin
+      if (timeMax !== null) constrains.createdAt.lt = timeMax
+    }
     return await models.UserRemindHistory.findAll({
       where: constrains
     })
