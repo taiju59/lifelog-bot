@@ -65,7 +65,7 @@ export default {
   async getRemindHistories(userId, timeMin = null, timeMax = null) {
     return await UserRemindHistory.getAll(userId, timeMin, timeMax)
   },
-  async getShouldConfirmRemindHistories(timeMax = null) {
-    return await UserRemindHistory.getShouldConfirm(timeMax)
+  async getShouldConfirmRemindHistories(timeMin = null, timeMax = null) {
+    return await UserRemindHistory.getShouldConfirm(timeMin, timeMax)
   }
 }

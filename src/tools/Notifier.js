@@ -38,14 +38,16 @@ const _notification = async (now) => {
 const _askNotification = async (now) => {
   // 対象のリマインド履歴を取得
   const mmt = moment(now)
-  const max = mmt.subtract(ASK_DELAY_HOURS, 'hours') // subtractは破壊型関数のため注意
-  const remindHistories = await services.User.getShouldConfirmRemindHistories(max)
+  const min = mmt.subtract(ASK_DELAY_HOURS, 'hours') // add, subtractは破壊型関数のため注意
+  const max = mmt.add(1, 'minutes') // addは破壊型関数のため注意
+  const remindHistories = await services.User.getShouldConfirmRemindHistories(min, max)
 
   // 送信
   // TODO: ユーザーのプラットフォームごとに切り分け
   const bot = new LineBot(config.line.channelAccessToken)
   for (const remindHistory of remindHistories) {
     const reminder = await services.User.getReminder(remindHistory.reminderId)
+    if (!reminder.isActive) continue // 削除済みの場合スキップ
     const lineUserId = await services.User.getLineUserId(reminder.userId)
     const messages = AskNotificationMessages.create(reminder, remindHistory.id)
     await bot.send(lineUserId, messages)
