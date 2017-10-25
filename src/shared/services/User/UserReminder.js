@@ -41,7 +41,8 @@ export default class UserReminder {
         time: {
           gte: min,
           lt: max
-        }
+        },
+        isActive: true
       }
     })
   }
