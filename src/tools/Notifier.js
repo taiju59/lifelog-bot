@@ -10,7 +10,6 @@ const ASK_DELAY_HOURS = 1 // 通知の1時間後に確認
 export default class Notifier {
 
   static async checkOrSend() {
-    console.log('call')
     const now = new Date()
     await _notification(now) // 通知
     await _askNotification(now) // 確認通知
@@ -21,7 +20,7 @@ const _notification = async (now) => {
   // 対象のリマインダーを取得
   const mmt = moment(now)
   const min = mmt.format('HH:mm')
-  const max = mmt.add(1, 'minutes').format('HH:mm') // addは破壊型関数のため注意
+  const max = mmt.clone().add(1, 'minutes').format('HH:mm')
   const reminders = await services.User.getReminderFromTime(min, max)
 
   // 送信
