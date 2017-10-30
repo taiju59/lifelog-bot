@@ -1,4 +1,5 @@
 import models from '../../models'
+import utils from '../../../libs/utils'
 
 export default class UserReminder {
 
@@ -26,12 +27,22 @@ export default class UserReminder {
   }
 
   static async getAll(userId) {
-    return await models.UserReminder.findAll({
+    const reminders = await models.UserReminder.findAll({
       where: {
         userId: userId,
         isActive: true
       }
     })
+    // JSTの時刻順にソート
+    reminders.sort((current, next) => {
+      // TODO: とりあえず動いた実装にしているので中身を理解して整理する
+      if (!current.time) return 1
+      if (!next.time) return -1
+      // TODO: 多タイムゾーン対応
+      if (utils.utcToJst(current.time, 'HH:mm') <= utils.utcToJst(next.time, 'HH:mm')) return -1
+      return 1
+    })
+    return reminders
   }
 
   static async getFromTime(min, max) {
