@@ -11,6 +11,10 @@ import editReminder from './editReminder'
 import editReminderName from './editReminderName'
 import answerReminder from './answerReminder'
 import randomTalk from './randomTalk'
+import shareHelpFeedback from './shareHelpFeedback'
+import share from './share'
+import feedback from './feedback'
+import hearFeedback from './hearFeedback'
 
 export default {
   echo,
@@ -25,5 +29,9 @@ export default {
   editReminder,
   editReminderName,
   answerReminder,
-  randomTalk
+  randomTalk,
+  shareHelpFeedback,
+  share,
+  feedback,
+  hearFeedback
 }
