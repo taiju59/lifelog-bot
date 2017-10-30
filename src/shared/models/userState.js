@@ -13,7 +13,8 @@ export default function (sequelize) {
         'confirmReminder',
         'selectReminder',
         'editReminder',
-        'editReminderName'
+        'editReminderName',
+        'hearFeedback'
       ),
       allowNull: false
     },

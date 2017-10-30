@@ -36,7 +36,7 @@ export default {
   async asyncRequest(options) {
     return new Promise((resolve, reject) => {
       request(options, (err, response, body) => {
-        if (response.statusCode == 200) {
+        if (200 <= response.statusCode && response.statusCode < 300) {
           resolve(body)
         } else {
           reject(body)

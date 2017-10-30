@@ -79,8 +79,17 @@ const _matchGlobal = async (bot, user, event) => {
     case 'キャンセル':
       await actions.cancel(bot, user)
       return true
+    case 'シェア・ヘルプ・フィードバック':
+      await actions.shareHelpFeedback(bot)
+      return true
     case 'ヘルプ':
       await actions.help(bot)
+      return true
+    case 'シェア':
+      await actions.share(bot)
+      return true
+    case 'フィードバック':
+      await actions.feedback(bot, user)
       return true
     default:
       return false
