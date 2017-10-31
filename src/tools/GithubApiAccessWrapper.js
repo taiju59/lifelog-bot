@@ -11,7 +11,7 @@ export default class GithubApiAccessWrapper {
     )
   }
 
-  async acceptFeedbackForIssue(title) {
-    return this.githubApiAccess.addIssue(title, ['feedback'])
+  async acceptFeedbackForIssue(userId, title) {
+    return this.githubApiAccess.addIssue(title, `User${userId}`, ['feedback'])
   }
 }

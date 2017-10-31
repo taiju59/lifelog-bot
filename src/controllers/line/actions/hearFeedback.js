@@ -8,7 +8,7 @@ export default async (bot, user, event, state) => {
     return
   }
   await services.User.removeState(user.id)
-  await new GithubApiAccessWrapper().acceptFeedbackForIssue(event.message.text)
+  await new GithubApiAccessWrapper().acceptFeedbackForIssue(user.id, event.message.text)
   await bot.send([{
     type: 'text',
     text: `フィードバックを受け付けたよ♪\n${config.github.issuesUrl}`
