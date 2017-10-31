@@ -3,7 +3,7 @@ import services from '../../../shared/services'
 import Stickers from '../../../views/Stickers'
 
 export default async (bot, user, event, state) => {
-  const reminders = await services.User.getAllReminder(user.id)
+  const reminders = await services.User.getAllReminders(user.id)
   if (utils.isEmpty(reminders)) {
     await bot.send([Stickers.notExist(), {
       type: 'text',

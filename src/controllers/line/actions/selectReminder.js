@@ -6,7 +6,7 @@ export default async (bot, user, event) => {
     await _except(bot)
     return
   }
-  const reminders = await services.User.getAllReminder(user.id)
+  const reminders = await services.User.getAllReminders(user.id)
   const reminderNum = event.message.text.match(/[0-9]+/)[0]
   const selectedReminder = reminders[reminderNum - 1]
   if (!selectedReminder) {

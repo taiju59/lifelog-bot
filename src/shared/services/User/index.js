@@ -38,7 +38,7 @@ export default {
   async setReminderActive(reminderId, isActive) {
     return await UserReminder.setActive(reminderId, isActive)
   },
-  async getAllReminder(userId) {
+  async getAllReminders(userId) {
     return await UserReminder.getAll(userId)
   },
   async getReminderFromTime(min, max) {
