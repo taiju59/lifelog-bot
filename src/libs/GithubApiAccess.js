@@ -10,7 +10,7 @@ export default class GithubApiAccess {
     this.userAgent = userAgent
   }
 
-  async addIssue(title, labels = null) {
+  async addIssue(title, body = null, labels = null) {
     const options = {
       method: 'POST',
       // url: ROOT_URL + this.repoPath + 'issues',
@@ -21,6 +21,7 @@ export default class GithubApiAccess {
       },
       body: {
         title: title,
+        body: body,
         labels: labels
       },
       json: true
