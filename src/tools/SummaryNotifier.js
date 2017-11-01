@@ -5,13 +5,13 @@ import LineBot from '../libs/bots/LineBot'
 import SummaryMessages from '../views/SummaryMessages'
 import utils from '../libs/utils'
 
-const notifyTime = 10 // 10時に通知
+const NOTIFY_TIME = 10 // 10時に通知
 
 export default class SummaryNotifier {
 
   static async checkOrSend() {
     const mmt = moment(new Date()).tz('Asia/Tokyo') // JSTでの現在時刻 TODO: 他タイムゾーン対応
-    if (mmt.hour() !== notifyTime) {
+    if (mmt.hour() !== NOTIFY_TIME) {
       return
     }
     // 指定時刻の場合、送信
