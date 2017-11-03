@@ -4,8 +4,8 @@ import services from '../shared/services'
 export default class Summary {
 
   constructor(userId, timezone) {
-    this.userId = userId
-    this.timezone = timezone
+    this._userId = userId
+    this._timezone = timezone
   }
 
   /**
@@ -23,9 +23,9 @@ export default class Summary {
    */
   async get() {
     // TODO: パフォーマンス考慮のため月の履歴から算出
-    const remindHistories = await this._getYesterdayRemindHistories(this.userId, this.timezone)
+    const remindHistories = await this._getYesterdayRemindHistories(this._userId, this._timezone)
     if (remindHistories.length == 0) return // 対象履歴なし
-    const mounthRemindHistories = await this._getMounthRemindHistories(this.userId, this.timezone)
+    const mounthRemindHistories = await this._getMounthRemindHistories(this._userId, this._timezone)
     const list = []
     for (const history of remindHistories) {
       const reminder = await services.User.getReminder(history.reminderId)

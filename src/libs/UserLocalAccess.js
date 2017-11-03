@@ -8,9 +8,9 @@ const CHAT_URL = 'https://chatbot-api.userlocal.jp/api/chat'
 export default class UserLocalAccess {
 
   constructor(botName, apiKey, platform) {
-    this.botName = botName
-    this.platform = platform
-    this.apiKey = apiKey
+    this._botName = botName
+    this._platform = platform
+    this._apiKey = apiKey
   }
 
   async getReply(userName, text) {
@@ -18,9 +18,9 @@ export default class UserLocalAccess {
       method: 'POST',
       url: CHAT_URL,
       body: {
-        bot_name: this.botName,
-        platform: this.platform,
-        key: this.apiKey,
+        bot_name: this._botName,
+        platform: this._platform,
+        key: this._apiKey,
         user_name: userName,
         message: text
       },

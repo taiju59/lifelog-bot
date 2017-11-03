@@ -4,7 +4,7 @@ import GithubApiAccess from '../libs/GithubApiAccess'
 export default class GithubApiAccessWrapper {
 
   constructor() {
-    this.githubApiAccess = new GithubApiAccess(
+    this._githubApiAccess = new GithubApiAccess(
       config.github.apiAccessToken,
       config.github.repoPath,
       config.app.botId
@@ -12,6 +12,6 @@ export default class GithubApiAccessWrapper {
   }
 
   async acceptFeedbackForIssue(userId, title) {
-    return this.githubApiAccess.addIssue(title, `User${userId}`, ['feedback'])
+    return this._githubApiAccess.addIssue(title, `User${userId}`, ['feedback'])
   }
 }

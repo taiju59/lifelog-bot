@@ -4,20 +4,20 @@ import utils from '../utils'
 export default class LineBot {
 
   constructor(channelAccessToken, replyToken = null) {
-    this.channelAccessToken = channelAccessToken
-    this.replyToken = replyToken
+    this._channelAccessToken = channelAccessToken
+    this._replyToken = replyToken
   }
 
   async reply(messages) {
-    if (this.replyToken == null) {
+    if (this._replyToken == null) {
       console.log(Error('replyToken is empty'))
       return
     }
     await this._request('message/reply', {
-      replyToken: this.replyToken,
+      replyToken: this._replyToken,
       messages: messages
     })
-    this.replyToken = null // 一度使用したreplyTokenは無効になるため破棄
+    this._replyToken = null // 一度使用したreplyTokenは無効になるため破棄
   }
 
   async send(userId, messages) {
@@ -35,7 +35,7 @@ export default class LineBot {
       method: 'GET',
       uri: 'https://api.line.me/v2/bot/profile/' + userId,
       auth: {
-        bearer: this.channelAccessToken
+        bearer: this._channelAccessToken
       },
       json: true
     }
@@ -64,7 +64,7 @@ export default class LineBot {
         uri: 'https://api.line.me/v2/bot/' + uriPath,
         body: body,
         auth: {
-          bearer: this.channelAccessToken
+          bearer: this._channelAccessToken
         },
         json: true
       }
