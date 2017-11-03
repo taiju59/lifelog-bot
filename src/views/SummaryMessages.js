@@ -1,15 +1,9 @@
-import moment from 'moment-timezone'
 import Stickers from './Stickers'
-import services from '../shared/services'
 
 export default class SummaryMessages {
 
-  static async create(userId) {
-    const remindHistories = await _getYesterdayRemindHistories(userId)
-    if (remindHistories.length === 0) return [] // TODO: 履歴がないユーザに登録を促す
-    const nameAndDone = await _createRemindNameAndDone(remindHistories)
-    const doneRate = _getDoneRate(nameAndDone)
-
+  static async create(summary) {
+    const doneRate = summary.doneRate
     let firstMessage
     let sticker
     if (doneRate === 100) {
@@ -26,9 +20,11 @@ export default class SummaryMessages {
       sticker = Stickers.zero()
     }
 
-    const listMessage = nameAndDone.map((nd) => {
+    const listMessage = summary.list.map((nd) => {
       const ox = nd.done ? '◯' : '×'
-      return `${nd.name}: ${ox}`
+      let text = `${nd.name}: ${ox}`
+      if (nd.count > 0) text += `\n今月${nd.count}回達成`
+      return text
     }).join('\n\n')
 
     return [{
@@ -36,33 +32,7 @@ export default class SummaryMessages {
       text: firstMessage
     }, {
       type: 'text',
-      text: `↓振り返り↓\n==\n${listMessage}\n==`
+      text: `↓昨日までの振り返り↓\n\n==\n${listMessage}\n==`
     }, sticker]
   }
-}
-
-const _getYesterdayRemindHistories = async (userId) => {
-  const mmt = moment(new Date()).tz('Asia/Tokyo').startOf('day') // JSTでの本日0時0分 TODO: 他タイムゾーン対応
-  const today = mmt.format()
-  const yesterday = mmt.subtract(1, 'day').format() // subtractは破壊的のため注意
-
-  const remindHistories = await services.User.getRemindHistories(userId, yesterday, today)
-  return remindHistories
-}
-
-const _createRemindNameAndDone = async (remindHistories) => {
-  const nameAndDone = []
-  for (const history of remindHistories) {
-    const reminder = await services.User.getReminder(history.reminderId)
-    nameAndDone.push({
-      name: reminder.name,
-      done: history.answer
-    })
-  }
-  return nameAndDone
-}
-
-const _getDoneRate = (nameAndDone) => {
-  const doneNum = nameAndDone.filter((nd) => nd.done).length
-  return Math.floor(doneNum / nameAndDone.length * 100) // %で返す
 }
