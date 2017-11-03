@@ -9,16 +9,21 @@ export default class LineBot {
     this._replyToken = replyToken
   }
 
+  checkHasRepLyToken() {
+    return this._replyToken != null
+  }
+
   async reply(messages) {
     if (this._replyToken == null) {
       console.log(Error('replyToken is empty'))
       return
     }
-    this._replyToken = null // 一度使用したreplyTokenは無効になるため破棄
-    return await this._postMessage('reply', {
+    const result = await this._postMessage('reply', {
       replyToken: this._replyToken,
       messages: messages
     })
+    this._replyToken = null // 一度使用したreplyTokenは無効になるため破棄
+    return result
   }
 
   async send(userId, messages) {

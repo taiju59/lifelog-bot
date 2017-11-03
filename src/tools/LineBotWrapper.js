@@ -9,7 +9,7 @@ export default class LineBotWrapper {
   }
 
   async send(messages) {
-    if (this._bot.replyToken != null) {
+    if (this._bot.checkHasRepLyToken()) {
       return await this._bot.reply(messages)
     }
     const user = await services.User.get(this._userId)
