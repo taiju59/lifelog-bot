@@ -10,8 +10,7 @@ export default class LineBotWrapper {
 
   async send(messages) {
     if (this._bot.replyToken != null) {
-      await this._bot.reply(messages)
-      return
+      return await this._bot.reply(messages)
     }
     const user = await services.User.get(this._userId)
     if (user == null) {
@@ -23,7 +22,7 @@ export default class LineBotWrapper {
       console.log(Error('No lineUserId. userId: ' + this._userId))
       return
     }
-    await this._bot.send(lineUserId, messages)
+    return await this._bot.send(lineUserId, messages)
   }
 
   async getProfile() {
