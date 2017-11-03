@@ -1,30 +1,36 @@
-import request from 'request'
 import utils from '../utils'
+
+const MESSAGING_API_URL = 'https://api.line.me/v2/bot/'
 
 export default class LineBot {
 
   constructor(channelAccessToken, replyToken = null) {
-    this.channelAccessToken = channelAccessToken
-    this.replyToken = replyToken
+    this._channelAccessToken = channelAccessToken
+    this._replyToken = replyToken
+  }
+
+  checkHasRepLyToken() {
+    return this._replyToken != null
   }
 
   async reply(messages) {
-    if (this.replyToken == null) {
+    if (this._replyToken == null) {
       console.log(Error('replyToken is empty'))
       return
     }
-    await this._request('message/reply', {
-      replyToken: this.replyToken,
+    const result = await this._postMessage('reply', {
+      replyToken: this._replyToken,
       messages: messages
     })
-    this.replyToken = null // 一度使用したreplyTokenは無効になるため破棄
+    this._replyToken = null // 一度使用したreplyTokenは無効になるため破棄
+    return result
   }
 
   async send(userId, messages) {
     if (Array.isArray(userId)) {
-      await this._multiCast(userId, messages)
+      return await this._multiCast(userId, messages)
     } else if (typeof userId == 'string') {
-      await this._push(userId, messages)
+      return await this._push(userId, messages)
     } else {
       console.log(Error('Invalid type of userId: ' + userId))
     }
@@ -33,49 +39,39 @@ export default class LineBot {
   async getProfile(userId) {
     const options = {
       method: 'GET',
-      uri: 'https://api.line.me/v2/bot/profile/' + userId,
+      uri: MESSAGING_API_URL + 'profile/' + userId,
       auth: {
-        bearer: this.channelAccessToken
+        bearer: this._channelAccessToken
       },
       json: true
     }
-    const profile = await utils.asyncRequest(options)
-    return profile
+    return await utils.asyncRequest(options)
   }
 
   async _multiCast(userIds, messages) {
-    await this._request('message/multicast', {
+    return await this._postMessage('multicast', {
       to: userIds,
       messages: messages
     })
   }
 
   async _push(userId, messages) {
-    await this._request('message/push', {
+    return await this._postMessage('push', {
       to: userId,
       messages: messages
     })
   }
 
-  async _request(uriPath, body) {
-    return new Promise((resolve, reject) => {
-      const options = {
-        method: 'POST',
-        uri: 'https://api.line.me/v2/bot/' + uriPath,
-        body: body,
-        auth: {
-          bearer: this.channelAccessToken
-        },
-        json: true
-      }
-      request(options, (err, response, body) => {
-        if (response.statusCode == 200) {
-          resolve(body)
-        } else {
-          reject(response)
-          console.log(Error(JSON.stringify(response)))
-        }
-      })
-    })
+  async _postMessage(type, body) {
+    const options = {
+      method: 'POST',
+      uri: MESSAGING_API_URL + 'message/' + type,
+      body: body,
+      auth: {
+        bearer: this._channelAccessToken
+      },
+      json: true
+    }
+    return await utils.asyncRequest(options)
   }
 }
