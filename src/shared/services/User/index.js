@@ -29,6 +29,9 @@ export default {
   async removeState(userId) {
     await UserState.removeState(userId)
   },
+  async initReminders(userId) {
+    return await UserReminder.initialize(userId)
+  },
   async getReminder(reminderId) {
     return await UserReminder.get(reminderId)
   },
