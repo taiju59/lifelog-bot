@@ -28,6 +28,7 @@ export default class Line {
     // TODO: トランザクションで対応
     const user = await models.User.create({
       platform: 'line',
+      timezone: 'Asia/Tokyo', // TODO: LINEユーザーのタイムゾーンを取得
       isActive: true
     })
     await models.UserLineData.create({

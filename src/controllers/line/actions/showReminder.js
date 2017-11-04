@@ -15,7 +15,7 @@ export default async (bot, user, event, state) => {
   const remindersText = reminders.map((reminder, index) => {
     let text = `(${index + 1})`
     if (reminder.time) {
-      const time = utils.utcToJst(reminder.time, 'HH:mm')
+      const time = utils.timeStrFromUtc(reminder.time, user.timezone, 'HH:mm')
       text += ` ${time}`
     }
     text += `\n${reminder.name}`

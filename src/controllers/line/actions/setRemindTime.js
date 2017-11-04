@@ -7,13 +7,13 @@ export default async (bot, user, data) => {
     console.log(Error(`data.time is empty(data: ${JSON.stringify(data)})`))
     return
   }
-  const utcStr = utils.jstToUtc(data.time, 'HH:mm')
+  const utcStr = utils.timeStrToUtc(data.time, user.timezone, 'HH:mm')
   await services.User.setRemindTime(data.reminderId, utcStr)
   const reminder = await services.User.getReminder(data.reminderId)
-  const jstStr = utils.utcToJst(reminder.time, 'H時m分')
+  const timeStr = utils.timeStrFromUtc(reminder.time, user.timezone, 'H時m分')
   await bot.send([Stickers.edited(), {
     type: 'text',
-    text: `は〜い、「${reminder.name}」を ${jstStr} に知らせるね`
+    text: `は〜い、「${reminder.name}」を ${timeStr} に知らせるね`
   }])
   await services.User.removeState(user.id)
 }
