@@ -1,3 +1,4 @@
+import init from './init'
 import echo from './echo'
 import cancel from './cancel'
 import help from './help'
@@ -17,6 +18,7 @@ import feedback from './feedback'
 import hearFeedback from './hearFeedback'
 
 export default {
+  init,
   echo,
   cancel,
   help,

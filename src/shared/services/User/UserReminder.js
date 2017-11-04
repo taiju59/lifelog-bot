@@ -3,6 +3,20 @@ import utils from '../../../libs/utils'
 
 export default class UserReminder {
 
+  /**
+   * reminderSets: array of object {name: 'xxx', time: 'xx:xx'}
+   */
+  static async initialize(userId, reminderSets) {
+    await models.UserReminder.destroy({
+      where: {
+        userId: userId
+      }
+    })
+    for (const obj of reminderSets) {
+      await UserReminder.add(userId, obj.name, obj.time)
+    }
+  }
+
   static async get(reminderId) {
     return await models.UserReminder.findById(reminderId)
   }

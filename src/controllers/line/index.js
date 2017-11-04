@@ -22,7 +22,9 @@ export default async (arg) => {
   }
   let user = await services.User.getByLineUserId(lineUserId)
   if (utils.isEmpty(user)) {
-    user = await services.User.createLineUser(lineUserId)
+    // 初期化
+    await actions.init(lineUserId, event.replyToken)
+    return
   }
 
   const bot = new LineBotWrapper(user.id, config.line.channelAccessToken, event.replyToken)
