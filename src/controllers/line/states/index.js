@@ -8,9 +8,6 @@ export default async (bot, user, event, state) => {
     case 'confirmReminder':
       await actions.confirmReminder(bot, user, event, state)
       break
-    case 'selectReminder':
-      await actions.selectReminder(bot, user, event)
-      break
     case 'editReminder':
       await actions.editReminder(bot, user, event, state)
       break
