@@ -47,13 +47,15 @@ export default class UserReminder {
         isActive: true
       }
     })
-    // JSTの時刻順にソート
+    // 時刻順にソート
+    const user = await models.User.findById(userId)
     reminders.sort((current, next) => {
       // TODO: とりあえず動いた実装にしているので中身を理解して整理する
       if (!current.time) return 1
       if (!next.time) return -1
-      // TODO: 多タイムゾーン対応
-      if (utils.utcToJst(current.time, 'HH:mm') <= utils.utcToJst(next.time, 'HH:mm')) return -1
+      const currentTimeStr = utils.timeStrFromUtc(current.time, user.timezone, 'HH:mm')
+      const nextTimeStr = utils.timeStrFromUtc(next.time, user.timezone, 'HH:mm')
+      if (currentTimeStr <= nextTimeStr) return -1
       return 1
     })
     return reminders

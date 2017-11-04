@@ -17,10 +17,9 @@ export default class SummaryNotifier {
     const bot = new LineBot(config.line.channelAccessToken)
     const users = await services.User.getAllUsers()
     for (const user of users) {
-      const timeZone = 'Asia/Tokyo' // TODO: ユーザーごとにタイムゾーンを持たせる
-      if (moment(now).tz(timeZone).hour() != NOTIFY_TIME) continue
+      if (moment(now).tz(user.timezone).hour() != NOTIFY_TIME) continue
       /* 対象時刻 */
-      const summary = await new Summary(user.id, timeZone, now).get()
+      const summary = await new Summary(user.id, user.timezone, now).get()
       if (utils.isEmpty(summary)) {
         continue // リマインド履歴なしなど
       }
