@@ -3,9 +3,10 @@ import services from '../shared/services'
 
 export default class Summary {
 
-  constructor(userId, timezone) {
+  constructor(userId, timezone, endDate) {
     this._userId = userId
     this._timezone = timezone
+    this._endDate = endDate
   }
 
   /**
@@ -22,10 +23,9 @@ export default class Summary {
    * ]}
    */
   async get() {
-    // TODO: パフォーマンス考慮のため月の履歴から算出
-    const remindHistories = await this._getYesterdayRemindHistories(this._userId, this._timezone)
+    const remindHistories = await this._getYesterdayRemindHistories(this._userId, this._timezone, this._endDate)
     if (remindHistories.length == 0) return // 対象履歴なし
-    const mounthRemindHistories = await this._getMounthRemindHistories(this._userId, this._timezone)
+    const mounthRemindHistories = await this._getMounthRemindHistories(this._userId, this._timezone, this._endDate)
     const list = []
     for (const history of remindHistories) {
       const reminder = await services.User.getReminder(history.reminderId)
@@ -42,20 +42,22 @@ export default class Summary {
     }
   }
 
-  async _getYesterdayRemindHistories(userId, timezone) {
-    const mmt = moment(new Date()).tz(timezone).startOf('day')
+  // 昨日の00:00 〜 本日00:00 までのリマインド履歴取得
+  async _getYesterdayRemindHistories(userId, timezone, now) {
+    const mmt = moment(now).tz(timezone).startOf('day')
     const today = mmt.format()
-    const yesterday = mmt.subtract(1, 'day').format() // subtractは破壊的のため注意
+    const yesterday = mmt.clone().subtract(1, 'day').format() // subtractは破壊的のため注意
 
     return await services.User.getRemindHistories(userId, yesterday, today)
   }
 
-  async _getMounthRemindHistories(userId, timezone) {
-    const mmt = moment(new Date()).tz(timezone)
+  // 月初から現時刻までのリマインド履歴取得
+  async _getMounthRemindHistories(userId, timezone, now) {
+    const mmt = moment(now).tz(timezone)
     const firstDay = mmt.clone().startOf('month').format()
-    const today = mmt.clone().startOf('day').format()
+    const nowStr = mmt.format()
 
-    return await services.User.getRemindHistories(userId, firstDay, today)
+    return await services.User.getRemindHistories(userId, firstDay, nowStr)
   }
 
   _getMounthDoneCount(reminderId, mounthRemindHistories) {

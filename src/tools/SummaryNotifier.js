@@ -20,7 +20,7 @@ export default class SummaryNotifier {
       const timeZone = 'Asia/Tokyo' // TODO: ユーザーごとにタイムゾーンを持たせる
       if (moment(now).tz(timeZone).hour() != NOTIFY_TIME) continue
       /* 対象時刻 */
-      const summary = await new Summary(user.id, timeZone).get()
+      const summary = await new Summary(user.id, timeZone, now).get()
       if (utils.isEmpty(summary)) {
         continue // リマインド履歴なしなど
       }

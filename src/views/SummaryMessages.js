@@ -32,7 +32,7 @@ export default class SummaryMessages {
       text: firstMessage
     }, {
       type: 'text',
-      text: `↓昨日までの振り返り↓\n\n==\n${listMessage}\n==`
+      text: `↓昨日の振り返り↓\n\n==\n${listMessage}\n==`
     }, sticker]
   }
 }
