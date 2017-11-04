@@ -27,8 +27,17 @@ const _except = async (bot) => {
 
 const _notExist = async (bot, num) => {
   await bot.send([Stickers.notExist(), {
-    type: 'text',
-    text: `${num}？そんなもの、ウチにはないよ`
+    type: 'template',
+    altText: `${num}？そんなもの、ウチにはないよ`,
+    template: {
+      type: 'buttons',
+      text: `${num}？そんなもの、ウチにはないよ`,
+      actions: [{
+        type: 'message',
+        label: '一覧を見る',
+        text: '一覧'
+      }]
+    }
   }])
 }
 

@@ -11,7 +11,7 @@ export default async (bot, user, event, state) => {
     }])
     return
   }
-  await services.User.setState(user.id, 'selectReminder')
+  await services.User.removeState(user.id)  // 一覧表示は「状態なし」とする
   const remindersText = reminders.map((reminder, index) => {
     let text = `(${index + 1})`
     if (reminder.time) {

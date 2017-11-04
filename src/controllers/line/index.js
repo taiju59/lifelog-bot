@@ -94,6 +94,11 @@ const _matchGlobal = async (bot, user, event) => {
       await actions.feedback(bot, user)
       return true
     default:
+      if (/^[0-9]+$/.test(event.message.text)) {
+        // 数字のみの場合リマインダー選択と解釈
+        await actions.selectReminder(bot, user, event)
+        return true
+      }
       return false
   }
 }
