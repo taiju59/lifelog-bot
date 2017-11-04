@@ -56,11 +56,8 @@ export default {
   async getRemindHistory(remindHistoryId) {
     return await UserRemindHistory.get(remindHistoryId)
   },
-  async addRemindHistory(userId, reminderId) {
-    return await UserRemindHistory.add(userId, reminderId)
-  },
-  async setRemindHistoryConfirmed(remindHistoryId, isConfirmed = true) {
-    return await UserRemindHistory.setConfirmed(remindHistoryId, isConfirmed)
+  async addRemindHistory(userId, reminderId, nextRemindAt = null) {
+    return await UserRemindHistory.add(userId, reminderId, nextRemindAt)
   },
   async updateRemindHistoryAnswer(remindHistoryId, answer) {
     return await UserRemindHistory.updateAnswer(remindHistoryId, answer)
@@ -68,7 +65,13 @@ export default {
   async getRemindHistories(userId, timeMin = null, timeMax = null) {
     return await UserRemindHistory.getAll(userId, timeMin, timeMax)
   },
-  async getShouldConfirmRemindHistories(timeMin = null, timeMax = null) {
-    return await UserRemindHistory.getShouldConfirm(timeMin, timeMax)
+  async getNextRemind(timeMin, timeMax) {
+    return await UserRemindHistory.getNextRemind(timeMin, timeMax)
+  },
+  async setNextRemind(remindHistoryId, nextRemindAt) {
+    return await UserRemindHistory.setNextRemind(remindHistoryId, nextRemindAt)
+  },
+  async removeNextRemind(remindHistoryId) {
+    return await UserRemindHistory.removeNextRemind(remindHistoryId)
   }
 }

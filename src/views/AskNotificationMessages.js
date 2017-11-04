@@ -6,7 +6,7 @@ export default class AskNotificationMessages {
       type: 'template',
       altText: `「${reminder.name}」やった？`,
       template: {
-        type: 'confirm',
+        type: 'buttons',
         text: `「${reminder.name}」やった？`,
         actions: [{
           type: 'postback',
@@ -15,9 +15,14 @@ export default class AskNotificationMessages {
           text: 'やった'
         }, {
           type: 'postback',
-          label: 'やってない',
+          label: '今日はやらない',
           data: `action=answerReminder&remindHistoryId=${remindHistoryId}&answer=false`,
-          text: 'やってない'
+          text: '今日はやらない'
+        }, {
+          type: 'postback',
+          label: 'あとでやる',
+          data: `action=answerReminder&remindHistoryId=${remindHistoryId}&answer=later`,
+          text: 'あとでやる'
         }]
       }
     }]

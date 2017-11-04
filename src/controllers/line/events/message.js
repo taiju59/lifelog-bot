@@ -1,5 +1,11 @@
 import actions from '../actions'
 
+const IGNORE_LIST = [
+  'やった',
+  '今日はやらない',
+  'あとでやる'
+]
+
 export default async (bot, user, event) => {
   switch (event.message.type) {
     case 'text':
@@ -11,7 +17,7 @@ export default async (bot, user, event) => {
 }
 
 const _matchText = async (bot, user, event) => {
-  if (event.message.text === 'やった' || event.message.text === 'やってない') {
+  if (IGNORE_LIST.some((ignoreTxt) => ignoreTxt == event.message.text)) {
     // タスク通知への回答
     // TODO: テキストマッチではなくstateなどで判定
     return
