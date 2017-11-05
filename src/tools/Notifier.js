@@ -5,14 +5,14 @@ import LineBot from '../libs/bots/LineBot'
 import NotificationMessages from '../views/NotificationMessages'
 import AskNotificationMessages from '../views/AskNotificationMessages'
 
-const ASK_DELAY_HOURS = 1 // 通知の1時間後に確認
+const ASK_DURATION_HOURS = 1
 
 export default class Notifier {
 
   static async checkOrSend() {
     const now = new Date()
     await _notification(now) // 通知
-    await _askNotification(now) // 確認通知
+    await _reNotification(now) // 再通知
   }
 }
 
@@ -28,18 +28,20 @@ const _notification = async (now) => {
   const bot = new LineBot(config.line.channelAccessToken)
   for (const reminder of reminders) {
     const lineUserId = await services.User.getLineUserId(reminder.userId)
-    const messages = NotificationMessages.create(reminder)
+    const remindHistory = await services.User.addRemindHistory(reminder.userId, reminder.id)
+    const messages = NotificationMessages.create(reminder, remindHistory.id)
     await bot.send(lineUserId, messages)
-    await services.User.addRemindHistory(reminder.userId, reminder.id)
+    const nextRemindAt = mmt.add(ASK_DURATION_HOURS, 'hours').format()
+    await services.User.setNextRemind(remindHistory.id, nextRemindAt)
   }
 }
 
-const _askNotification = async (now) => {
+const _reNotification = async (now) => {
   // 対象のリマインド履歴を取得
-  const mmt = moment(now).subtract(ASK_DELAY_HOURS, 'hours')
+  const mmt = moment(now)
   const min = mmt.format()
   const max = mmt.clone().add(1, 'minutes').format()
-  const remindHistories = await services.User.getShouldConfirmRemindHistories(min, max)
+  const remindHistories = await services.User.getNextRemind(min, max)
 
   // 送信
   // TODO: ユーザーのプラットフォームごとに切り分け
@@ -49,7 +51,7 @@ const _askNotification = async (now) => {
     if (!reminder.isActive) continue // 削除済みの場合スキップ
     const lineUserId = await services.User.getLineUserId(reminder.userId)
     const messages = AskNotificationMessages.create(reminder, remindHistory.id)
+    await services.User.removeNextRemind(remindHistory.id)
     await bot.send(lineUserId, messages)
-    await services.User.setRemindHistoryConfirmed(remindHistory.id)
   }
 }

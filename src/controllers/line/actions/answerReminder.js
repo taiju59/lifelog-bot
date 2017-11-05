@@ -1,3 +1,5 @@
+import config from 'config'
+import moment from 'moment'
 import utils from '../../../libs/utils'
 import services from '../../../shared/services'
 import Stickers from '../../../views/Stickers'
@@ -7,16 +9,26 @@ export default async (bot, user, data) => {
     console.log(Error(`data require remindHistoryId and answer(data: ${JSON.stringify(data)})`))
     return
   }
-  await services.User.updateRemindHistoryAnswer(data.remindHistoryId, data.answer)
-  if (data.answer === 'true') {
-    await _yes(bot, user, data)
-  } else {
-    await _no(bot)
+  switch (data.answer) {
+    case 'true':
+      await _yes(bot, user, data)
+      break
+    case 'false':
+      await _no(bot, user, data)
+      break
+    case 'later':
+      await _later(bot, user, data)
+      break
+    default:
+      console.log(Error(`Invalid answer: ${data.answer}`))
+      return
   }
   await services.User.removeState(user.id)
 }
 
 const _yes = async (bot, user, data) => {
+  await services.User.updateRemindHistoryAnswer(data.remindHistoryId, true)
+  await services.User.removeNextRemind(data.remindHistoryId)
   const histories = await services.User.getRemindHistories(user.id)
   const targetRemindHistory = await services.User.getRemindHistory(data.remindHistoryId)
   const targetHistories = histories.filter((history) => history.reminderId == targetRemindHistory.reminderId)
@@ -56,9 +68,20 @@ const _getText = (num) => {
   }
 }
 
-const _no = async (bot) => {
+const _no = async (bot, user, data) => {
+  await services.User.updateRemindHistoryAnswer(data.remindHistoryId, false)
+  await services.User.removeNextRemind(data.remindHistoryId)
   await bot.send([Stickers.deleted(), {
     type: 'text',
     text: 'そうかい'
+  }])
+}
+
+const _later = async (bot, user, data) => {
+  const nextRemindAt = moment().clone().add(config.app.reminder.askDurationHours, 'hours').format()
+  await services.User.setNextRemind(data.remindHistoryId, nextRemindAt)
+  await bot.send([{
+    type: 'text',
+    text: `あい、わかった\n${config.app.reminder.askDurationHours}時間後にまた聞くよ〜`
   }])
 }
